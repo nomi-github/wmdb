@@ -36,7 +36,7 @@
     let data;// = getNearbyTheaters(latitude, longitude);
 
     if (navigator.geolocation) {
-      data = navigator.geolocation.getCurrentPosition();
+      navigator.geolocation.getCurrentPosition(showPosition);
 
     } else {
       data = "Geolocation is not supported by this browser.";
@@ -44,6 +44,12 @@
     $("div").html(JSON.stringify(data));
 
     })
+
+    function showPosition(position) {
+        $("div").html(JSON.stringify(position));
+        // x.innerHTML = "Latitude: " + position.coords.latitude +
+        // "<br>Longitude: " + position.coords.longitude;
+        }
 
     
 
@@ -74,6 +80,5 @@
 </head>
 <body>
     <div></div>
-    <p><%=JSON.stringify(data)></p>
 </body>
 </html>
