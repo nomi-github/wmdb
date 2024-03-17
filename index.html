@@ -46,7 +46,7 @@
     })
 
     function showPosition(position) {
-        $("div").html(JSON.stringify(position));
+        $("div").html(position + "||||" + position.coords.latitude + ","+position.coords.longitude);
         // x.innerHTML = "Latitude: " + position.coords.latitude +
         // "<br>Longitude: " + position.coords.longitude;
         }
