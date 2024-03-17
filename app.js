@@ -23,7 +23,7 @@ app.get("/", async (req, res) => {
 
     // Handle the location data as needed (e.g., send it as a response)
     // res.json({ country, regionName, city, latitude: lat, longitude: lon });
-    res.render("index");
+    res.render("pages/index");
   } catch (error) {
     console.error("Error fetching geolocation:", error);
     res.status(500).json({ error: "Error fetching geolocation" });
