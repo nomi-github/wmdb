@@ -2,37 +2,40 @@ const express = require("express");
 const axios = require("axios");
 const ejs = require("ejs");
 const path = require("path");
-
+var cookieParser = require('cookie-parser');
+const { db } = require("./routers/mongodb");
 const app = express();
+
+
+app.use(cookieParser())
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.set("view engine", "html");
 app.engine("html", ejs.renderFile);
 
-app.get("/", async (req, res) => {
-  // Capture the user's IP address
-  // const ipAddress = req.ip;
-  const ipAddress = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-  try {
-    // Make a request to the IP-API to get geolocation information
-    const response = await axios.get(`http://ip-api.com/json/${ipAddress}`);
-
-    console.log("ip adress", ipAddress);
-
-    // Extract relevant information from the response
-    const { country, regionName, city, lat, lon } = response.data;
-
-    // Handle the location data as needed (e.g., send it as a response)
-    // res.json({ country, regionName, city, latitude: lat, longitude: lon });
-    res.render("pages/index");
-  } catch (error) {
-    console.error("Error fetching geolocation:", error);
-    res.status(500).json({ error: "Error fetching geolocation" });
-  }
-});
 
 app.use(express.static("public"));
 app.use("/css", express.static(path.join(__dirname, "views", "css")));
 app.use("/images", express.static(path.join(__dirname, "views", "images")));
+
+app.get('/', async (req, res) => {
+
+  res.render("pages/index");
+});
+
+
+app.get('/getLocation', async (req, res) => {
+  try {
+      const response = await axios.get('https://ipinfo.io/json');
+      const { loc, city, country, postal } = response.data;
+      const [latitude, longitude] = loc.split(',');
+      res.json({ latitude, longitude, city, country, postal });
+  } catch (error) {
+      console.error('Error fetching user location:', error.message);
+      res.status(500).json({ error: 'Error fetching user location' });
+  }
+});
 
 const PORT = process.env.PORT || 80;
 app.listen(PORT, () => {
