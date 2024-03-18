@@ -1,0 +1,85 @@
+#theatreContent {
+    position:relative;
+    display: flex;
+    flex-direction: column;
+}
+
+#theatresHeader {
+    font-size: x-large;
+}
+
+.padding-20 {
+    padding: 20px;
+}
+
+#locationChangeDiv {
+    border: 1px solid black;
+    padding: 20px;
+    visibility: visible;
+    width: 200px;
+    position: absolute;
+    z-index: 100;
+}
+
+.closeButton {
+    float: right;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+}
+
+#dateList {
+    display: flex;
+    justify-content: left;
+    gap:20px;
+    margin:50px;
+}
+
+.date {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    justify-content: center;
+    align-items: center;
+    padding:10px;
+}
+
+.moviePoster {
+    display: flex;
+    gap:10px;
+    border: 1px solid black;
+    width: 60%;
+    padding: 20px;
+}
+
+.showingTimes {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.showingTimes div {
+    border-radius: 5px;
+    border: 1px solid black;
+    padding:5px;
+    background-color: black;
+    color: white;
+}
+
+.poster {
+    width: 135px;
+    height: 200px;
+    border: 1px solid black;
+}
+
+.posterTitle {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 28px;
+    text-transform: uppercase;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}

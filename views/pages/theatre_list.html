@@ -1,11 +1,73 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <title>Sample</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/theatres.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="js/theatres.js"></script>
+    <script>
+        let showTimes = [];
+        $(document).ready(function () {            
+            $.ajax({
+                url: '/getShowTimes', // Server-side endpoint to fetch location
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    let html = "";
+                    if (!response.showtimes) {
+                        html = 'Sorry we could not find any showtimes for selected date';
+                    } else {
+                        //showTimes = response.showtimes;
+                        for (let ele of response.showtimes) {
+                            console.log(JSON.stringify(ele), createPlayTimeDiv(ele));
+                            html += createPlayTimeDiv(ele);   
+                        }
+                    }
+                    $('#theatresList').html(html);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching showtimes:', error);
+                    $('#theatresList').html('Error fetching showtimes');
+                }
+            });
+        });
+
+      
+    </script>
+  </head>
+  <body>
+    <%- include('header.html'); %>
+    <div id="theatreContent">
+        <div id="theatresHeader" class="padding-20">
+            <label for="">Movie Times + Tickets NEAR </label>
+            <label for="location" id="selectedLocation"><%=location%></label>
+        </div>
+        <div id="changeLocation" class="padding-20">
+                Enter city, state or zipcode <button onclick="showLocationChange()">Change</button>
+            <div id="locationChangeDiv" style="visibility: hidden;">
+                <div onclick="closeLocationChangeDiv()" class="closeButton">X</div>
+                <form method="post" action="/changeLocation" id="changeLocationForm">
+                    <input type="text" placeholder="Enter City, State or Zipcode" ondragenter="changeLocation()" name="newLocation">
+                    <button onclick="setToCurrentLocation()">Current Locaiton</button>
+                </form>
+            </div>
+        </div>
+        <div id="dateList">
+            <%for (let d of dates) { %>
+                <div class="date">
+                    <div><%=d.dayOfWeek%></div>
+                    <div><%=d.month%></div>
+                    <div><%=d.dayOfMonth%></div>
+                </div>
+            <%}%>
+        </div>
+        <div id="theatresList">
+         
+        </div>
+    </div>
+    <%- include('footer.html'); %>
+  </body>
 </html>
