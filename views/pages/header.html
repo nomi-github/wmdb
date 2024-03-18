@@ -1,7 +1,25 @@
 <div class="header">
-  <a href="/"><img alt="logo" width="50" height="50" /></a>
-  <a href="/">Home</a>
-  <a href="/movies">Movies</a>
-  <a href="/theaters">Theaters</a>
-  <a href="/profile">Profile</a>
+  <div class="left">
+    <a href="/"><img alt="logo" width="50" height="50" /></a>
+    <a href="/">Home</a>
+    <a href="/movies">Movies</a>
+    <a href="/theaters">Theaters</a>
+    <a href="/profile">Profile</a>
+  </div>
+  <div class="right">
+    <div class="search-input">
+      <button class="icon-button" onclick="openSearch()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+        </svg>
+      </button>
+      <input type="text" placeholder="Movie name" />
+    </div>
+    <div class="profile-container"></div>
+    <label class="arrow">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+      </svg>
+    </label>
+  </div>
 </div>

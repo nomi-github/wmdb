@@ -5,12 +5,182 @@
     <link rel="stylesheet" href="css/layout.css" />
     <link rel="stylesheet" href="css/style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script>
+      let images = [
+        { small: "small-wonka.jpg", big: "wonka.jpg" },
+        { small: "small-poor.jpg", big: "poor.jpeg" },
+        { small: "small-kungfu.jpg", big: "kungfu.avif" },
+        { small: "small-dune.jpeg", big: "dune.jpeg" },
+        { small: "small-damsel.jpeg", big: "damsel.jpeg" },
+      ];
+      let currentIndex = 2;
+      let sst = 0;
+      function transformSlide() {
+        for (let i = 0; i < images.length; i++) {
+          if (i < currentIndex) $(".slider").append(`<div class="img rotateLeft"> <img src="/images/${images[i].small}"/></div>`);
+          else if (i == currentIndex) $(".slider").append(`<div class="img active"> <img src="/images/${images[i].small}"/></div>`);
+          else $(".slider").append(`<div class="img rotateRight"> <img src="/images/${images[i].small}"/></div>`);
+        }
+      }
+      $(document).ready(function () {
+        $(".movies .card-outer").mouseover(function () {
+          // $(".movies .card-inner").css("width", "100%");
+        });
+        transformSlide();
+        $(window).on("scroll", function () {
+          if ($(window).scrollTop() > 50) {
+            $(".header").addClass("active");
+          } else {
+            //remove the background property so it comes transparent again (defined in your css)
+            $(".header").removeClass("active");
+          }
+        });
+      });
+
+      function changeSlide(dest) {
+        let dist = $(".slider .img:first-child").outerWidth();
+        if (dest == "left") {
+          if (currentIndex == 0) currentIndex = images.length - 1;
+          else (currentIndex - 1) % images.length;
+          $(".slider").children().eq(1).removeClass("rotateLeft").addClass("active");
+          $(".slider").children().eq(2).addClass("rotateRight").removeClass("active");
+
+          let last = $(".slider").children().last();
+          last.removeClass("rotateRight").addClass("rotateLeft");
+          $(".slider").prepend(last.prop("outerHTML"));
+          $(".slider").children().last().remove();
+        } else if (dest == "right") {
+          currentIndex = (currentIndex + 1) % images.length;
+
+          $(".slider").children().eq(2).addClass("rotateLeft").removeClass("active");
+          $(".slider").children().eq(3).removeClass("rotateRight").addClass("active");
+
+          let first = $(".slider .img").first();
+          first.removeClass("rotateLeft").addClass("rotateRight");
+          $(".slider").append(first.prop("outerHTML"));
+          $(".slider").children().first().remove();
+        }
+        $(".top-container").css("background-image", "url(/images/" + images[currentIndex].big + ")");
+      }
+      function openSearch() {
+        $(".search-input input").addClass("open");
+      }
+    </script>
   </head>
   <body>
     <%- include('header.html'); %>
-    <div>Home</div>
+    <div class="home">
+      <div class="top-container">
+        <div class="outer">
+          <div class="top-content">
+            <div>
+              <div class="title">Damsel</div>
+              <div class="captions">
+                <label>2022</label>
+                <label>185 min</label>
+                <label>English</label>
+              </div>
+            </div>
+            <div>
+              <div class="desc"><label>Genre:</label>Action, Fantasy, Superhereos</div>
+              <div class="desc">
+                <label>Contents:</label> A young woman's marriage to a charming prince turns into a fierce fight for survival when she's offered up as a sacrifice to a fire-breathing dragon.
+              </div>
+              <div class="desc"><label>Starring:</label>Millie Brown,</div>
+            </div>
+            <div class="slider-button">
+              <button onclick="changeSlide('left')">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+              </button>
+              <button onclick="changeSlide('right')">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div style="width: 50%; height: 100%; display: flex; align-items: center">
+            <button class="playTrailer">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112Z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="slider-outer">
+        <div class="slider">
+          <!-- <img src="/images/small-poster.jpg" /> -->
+          <!-- <div class="img rotateLeft">
+          <img src="/images/small-poster.jpg" />
+        </div>
+        <div class="img rotateLeft">
+          <img src="/images/small-poster.jpg" />
+        </div>
+        <div class="img">
+          <img src="/images/small-poster.jpg" />
+        </div>
+        <div class="img rotateRight">
+          <img src="/images/small-poster.jpg" />
+        </div>
+        <div class="img rotateRight">
+          <img src="/images/small-poster.jpg" />
+        </div> -->
+        </div>
+      </div>
+      <div class="movies">
+        <div class="inner">
+          <p class="title">Popular</p>
+          <div class="card-container">
+            <div class="card-outer">
+              <div class="card-inner">
+                <p>Dune</p>
+              </div>
+            </div>
+            <div class="card-outer">
+              <div class="card-inner"><p>Dune</p></div>
+            </div>
+            <div class="card-outer">
+              <div class="card-inner"><p>Dune</p></div>
+            </div>
+            <div class="card-outer">
+              <div class="card-inner"><p>Dune</p></div>
+            </div>
+            <div class="card-outer">
+              <div class="card-inner"><p>Dune</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="inner">
+          <p class="title">Recommendations</p>
+          <div class="card-container">
+            <div class="card-outer rec">
+              <div class="card-inner">
+                <p>Dune</p>
+              </div>
+            </div>
+            <div class="card-outer rec">
+              <div class="card-inner"><p>Wonka</p></div>
+            </div>
+            <div class="card-outer rec">
+              <div class="card-inner"><p>Dune</p></div>
+            </div>
+            <div class="card-outer rec">
+              <div class="card-inner"><p>Dune</p></div>
+            </div>
+            <div class="card-outer rec">
+              <div class="card-inner"><p>Dune</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <%- include('footer.html'); %>
   </body>
 </html>
