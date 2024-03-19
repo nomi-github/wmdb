@@ -7,7 +7,7 @@ const options = {
 const router = express.Router(options);
 
 router.get("/", async function (req, res, next) {
-  res.render("pages/loader");
+  // res.render("pages/loader");
   const response = {};
   // console.log("fjdjfhj");
   // response.popular = await homeHelper.popular(1);
@@ -15,7 +15,7 @@ router.get("/", async function (req, res, next) {
   // response.genres = await homeHelper.genres();
   // response.recommend = await homeHelper.recommend(1);
   // await console.log(response);
-  // await res.render("pages/index", { response: response });
+  await res.render("pages/index", { response: response });
 });
 
 module.exports = router;
