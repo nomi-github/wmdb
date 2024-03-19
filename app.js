@@ -11,9 +11,11 @@ app.engine("html", ejs.renderFile);
 
 // CUSTOM ROUTERS
 const { db } = require("./routers/mongodb");
-var {theatreRouter, getCurrentLocation} = require('./routers/theatres.js')
+var {theatreRouter, getCurrentLocation} = require('./routers/theatres.js');
+const router = require("./routers/router");
 
-// CONFIGURATION MIDDLEWARESapp.use(cookieParser());
+// CONFIGURATION MIDDLEWARES
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -27,7 +29,7 @@ app.use("/js", express.static(path.join(__dirname, "views", "js")));
 
 // CUSTOM ROUTERS MIDDLEWARES
 app.use(theatreRouter);
-
+app.use(router);
 // GET ROUTERS 
 app.get('/', function(req, res, next) {
   res.render("pages/index");
@@ -41,4 +43,4 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-app.use(router);
+
