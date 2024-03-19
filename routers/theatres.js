@@ -27,18 +27,38 @@ theatreRouter.post("/changeLocation", function (req, res, next) {
     res.redirect("back");
 })
 
+let serpApiKey = "e6ae8922bede93a3c646ceefd0231588ffecdb8a8d556f3b063a100b8b4c8a91";
 const { getJson } = require("serpapi");
+const { json } = require('body-parser');
 theatreRouter.get("/getShowTimes", function (req, res, next) {
-    console.log('location: ', req.cookies.location);
+   // let result = getNearByShowTimes(req.cookies.location);
     getJson({
-        q: "movie showtimes near me",
+        q: "theaters nearby",
         location: req.cookies.location,
         hl: "en",
         gl: "us",
-        api_key: "e6ae8922bede93a3c646ceefd0231588ffecdb8a8d556f3b063a100b8b4c8a91"
-    }, (json) => {
-        console.log(json.showtimes);
-        res.send(json);
+        api_key: serpApiKey
+    }, (theatres) => {
+        try {
+            let localTheatres = theatres["showtimes"];//theatres["local_results"];
+            res.send(localTheatres);
+          /*  let result = [];
+            for (let ele of localTheatres.places) {
+                let obj = { title: ele.title, addr: ele.address, thumbnail: ele.thumbnail };
+                getJson({ q: "movies at " + ele.title, api_key: serpApiKey }, (showTimes) => {
+                    obj.showTimes = showTimes.showtimes;
+                    console.log(obj.showTimes);
+                    result.push(obj); // Push inside the callback to ensure it's executed after showTimes is assigned
+                    if (result.length === localTheatres.places.length) {
+                        res.send(result);
+                        //resolve(result); // Resolve after all showTimes are assigned
+                    }
+                });                            
+            }*/
+           
+        } catch (error) {
+            reject(error);
+        }
     });
 })
 
@@ -76,7 +96,7 @@ function getCurrentLocation() {
         .then(response => {
             const { loc, city, country, postal, region } = response.data;
             // const [latitude, longitude] = loc.split(',');
-            result = city + ", " + region + ", " + (country=='US'? 'United States': country);
+            result = city + ", " + region + ", " + (country == 'US' ? 'United States' : country);
             console.log("//getCurrentLocation", result);
             return result;
         })

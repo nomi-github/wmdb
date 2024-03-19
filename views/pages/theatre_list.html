@@ -10,19 +10,21 @@
     <script src="js/theatres.js"></script>
     <script>
         let showTimes = [];
+        let selectedDate;
         $(document).ready(function () {            
             $.ajax({
-                url: '/getShowTimes', // Server-side endpoint to fetch location
+                url: '/getShowTimes', // Server-side endpoint to fetch showTimes
                 type: 'GET',
                 dataType: 'json',
                 success: function (response) {
                     let html = "";
-                    if (!response.showtimes) {
+                    if (!response) {
                         html = 'Sorry we could not find any showtimes for selected date';
                     } else {
                         //showTimes = response.showtimes;
-                        for (let ele of response.showtimes) {
-                            console.log(JSON.stringify(ele), createPlayTimeDiv(ele));
+                        console.log(response, JSON.stringify(response));
+                        for (let ele of response) {
+                            console.log(JSON.stringify(ele), createPlayTimeDiv(ele, selectedDate));
                             html += createPlayTimeDiv(ele);   
                         }
                     }
@@ -35,17 +37,24 @@
             });
         });
 
+
+        function changeSelectedDate(self, dayOfMonth, month) {
+            console.log('datechange: ' + $('div[class="date flex-column date-selected"]'));
+            $('div[class="date flex-column date-selected"]').removeClass('date-selected');            
+            $(self).addClass('date-selected');
+            selectedDate = month + " " + dayOfMonth;
+        }
       
     </script>
   </head>
   <body>
     <%- include('header.html'); %>
-    <div id="theatreContent">
-        <div id="theatresHeader" class="padding-20">
-            <label for="">Movie Times + Tickets NEAR </label>
-            <label for="location" id="selectedLocation"><%=location%></label>
+    <div id="theatreContent" class="flex-column gap_10">
+        <div id="theatresHeader" class="padding_20">
+            <label for="">Movie Times + Tickets </label>
+            <label for="location" id="selectedLocation">NEAR <%=location%></label>
         </div>
-        <div id="changeLocation" class="padding-20">
+        <div id="changeLocation" class="padding_20">
                 Enter city, state or zipcode <button onclick="showLocationChange()">Change</button>
             <div id="locationChangeDiv" style="visibility: hidden;">
                 <div onclick="closeLocationChangeDiv()" class="closeButton">X</div>
@@ -57,7 +66,7 @@
         </div>
         <div id="dateList">
             <%for (let d of dates) { %>
-                <div class="date">
+                <div class="date flex-column" onclick="changeSelectedDate(this, '<%=d.dayOfMonth%>', '<%=d.month%>')">
                     <div><%=d.dayOfWeek%></div>
                     <div><%=d.month%></div>
                     <div><%=d.dayOfMonth%></div>
