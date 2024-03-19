@@ -13,10 +13,10 @@ app.engine("html", ejs.renderFile);
 const { db } = require("./routers/mongodb");
 var {theatreRouter, getCurrentLocation} = require('./routers/theatres.js')
 
-// CONFIGURATION MIDDLEWARES
-app.use(cookieParser())
+// CONFIGURATION MIDDLEWARESapp.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 
 app.use(express.static("public"));
 app.use("/css", express.static(path.join(__dirname, "views", "css")));
@@ -40,3 +40,5 @@ const PORT = process.env.PORT || 80;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+app.use(router);

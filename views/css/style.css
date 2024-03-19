@@ -1,4 +1,200 @@
 body {
   padding: 0;
   margin: 0;
+  background-color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+.home .top-container {
+  width: 100%;
+  height: 40.25vw;
+  background-image: url("./../images/damsel.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.home .top-content {
+  /* mask-image: linear-gradient(90deg, transparent, #000); */
+  height: 100%;
+  width: auto;
+  background: linear-gradient(270deg, transparent, #000);
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  color: white;
+  padding-left: 70px;
+  gap: 30px;
+}
+
+.top-content .title {
+  font-size: 48px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.top-content .captions label {
+  border-right: 1px solid white;
+  padding-right: 10px;
+}
+.top-content .captions label:last-child {
+  border-right: none;
+}
+
+.top-content .desc {
+  margin-top: 10px;
+  width: 70%;
+  overflow: hidden;
+}
+.top-content .desc label {
+  color: red;
+  margin-right: 10px;
+}
+
+.slick-prev.slick-arrow,
+.slick-next.slick-arrow {
+  width: 40px;
+  height: 40px;
+  color: rgba(255, 255, 255, 0.6);
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  padding: 0;
+  top: -100px;
+  left: 70px;
+}
+.slick-next.slick-arrow {
+  left: 120px;
+}
+.top-content .slider-button button:hover {
+  color: rgba(255, 255, 255, 1);
+  cursor: pointer;
+}
+.slider-outer {
+  background-image: url("../images/bg-black.jpeg");
+  width: 100vw;
+}
+.slider {
+  background: linear-gradient(black, gray, transparent, transparent, black);
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  transition: transform 2s ease;
+  -webkit-transition: -webkit-transform 2s ease;
+  /* overflow-x: hidden; */
+}
+.slider .img {
+  perspective: 300px;
+}
+
+.slider .img img {
+  width: calc((100vw - 300px) / 5);
+  height: 300px;
+}
+
+.slider .img.active img {
+  transition: 0.5s ease all;
+
+  -webkit-transform: rotate3d(0, 1, 0, 0deg); /* Chrome, Safari, Opera */
+  transform: rotate3d(0, 1, 0, 0deg);
+}
+.slider .img.rotateLeft img {
+  -webkit-transform: rotate3d(0, 1, 0, 30deg); /* Chrome, Safari, Opera */
+  transform: rotate3d(0, 1, 0, 30deg);
+  transition: all 0.5s ease-out;
+  transition: transform 1s ease;
+  -webkit-transition: -webkit-transform 0.5s ease;
+}
+
+.slider .img.rotateRight img {
+  -webkit-transform: rotate3d(0, 1, 0, -30deg); /* Chrome, Safari, Opera */
+  transform: rotate3d(0, 1, 0, -30deg);
+  transition: all 1s ease-out;
+}
+.top-container .outer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+}
+
+.playTrailer {
+  background-color: transparent;
+  color: white;
+  opacity: 60%;
+  width: 200px;
+  height: 200px;
+  border: none;
+  margin: auto;
+}
+.playTrailer:hover {
+  cursor: pointer;
+}
+.movies {
+  display: grid;
+  padding: 10px 70px;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.movies .inner {
+  width: 100%;
+}
+
+.movies .title {
+  font-size: 26px;
+  font-weight: 500;
+  color: white;
+}
+.movies .card-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+.movies .card-inner {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 0px;
+  transition: height 0.5s ease-in;
+  position: relative;
+}
+.movies .card-outer:hover .card-inner {
+  height: 100%;
+}
+.movies .card-outer:hover .card-inner p {
+  display: block;
+}
+.card-inner p {
+  color: white;
+  bottom: 10px;
+  left: 10px;
+  font-weight: 600;
+  font-size: 20px;
+  position: absolute;
+  display: none;
+}
+
+.movies .card-outer {
+  height: 300px;
+  border-radius: 10px;
+  background-image: url("../images/small-dune.jpeg");
+  background-size: cover;
+}
+.movies .card-outer:nth-child(2) {
+  background-image: url("../images/small-wonka.jpg");
+}
+.movies .card-outer:nth-child(3) {
+  background-image: url("../images/small-damsel.jpeg");
+}
+.movies .card-outer:nth-child(4) {
+  background-image: url("../images/small-damsel.jpeg");
+}
+.movies .card-outer:nth-child(5) {
+  background-image: url("../images/small-poor.jpg");
+}
+
+.slick-list {
+  overflow: visible !important;
+  overflow-x: hidden !important;
+}
+.slick-slide {
+  height: auto !important;
 }
