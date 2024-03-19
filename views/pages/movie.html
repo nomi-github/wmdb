@@ -3,36 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Document</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"  type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+
     <script>
 
-    //const url = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1';
-    const url = 'https://api.themoviedb.org/3/movie/944401/recommendations?language=en-US&page=1';
-    const options = {
-    method: 'GET',
-    headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzN2MzNTc5ODE0Y2FmZGNjMWI4MjEyZmZjMzQ5OTNmZiIsInN1YiI6IjY1ZjVmNWY5ZDhmNDRlMDE2MzRlZWQ1NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xqxXb1-nAaRKKayR2IQSOAkjn7_21BosjYG9cUHMhYE'
-    }
-    };
-
-    $(document).ready(function() {
-        fetch(url, options)
-    .then(res => res.json())
-    .then(json => {
-        console.log(json);
-       // let result = JSON.parse(json);
-     
-        $("div").html(JSON.stringify(json));
-
-    })
-    .catch(err => console.error('error:' + err));
-    })
-   
     </script>
 </head>
+<style>
+    body{
+        background-color: rgb(26, 26, 26);
+    }
+    .header{
+        z-index: 100;
+    }
+    #container{
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        height: 600px;
+        background: linear-gradient(to left, transparent,rgb(26,26,26)); /* Change 'white' to your desired background color */
+        z-index: -9;
+        mask-image: linear-gradient(to left, transparent, black); /* Adjust 'black' to match the darkest color in your image */
+    }
+    #poster_main{
+
+        opacity: 0.5;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        z-index: -10;
+   /*     object-fit: contain;*/
+
+    }
+    #divider {
+        position: absolute;
+        top:600px;
+        background-color: rgb(41, 40, 40);
+        width: 100%;
+        height: 140px;
+        z-index: -10
+
+    }
+    #playerdiv{
+        width: 400px;
+        height: 300px;
+
+    }
+    #playerdiv img{
+        width: 200px;
+        height: 300px;
+        background-color: antiquewhite;
+        object-fit: cover;
+        position: absolute;
+        left: 300px;
+        top: 450px;
+        z-index: -1;
+
+    }
+    #playicon{
+        position: absolute;
+        left: 370px;
+        top: 580px;
+        color: rgb(226,221,221);
+        font-size: 60px;
+        z-index: -1
+    }
+    #playicon:hover{
+        font-size: 62px;
+        color: white ;
+    }
+    #divider label{
+        color: white;
+        position: relative;
+        top: 50px;
+    }
+    #content{
+        width: 945px;
+        border: 1px solid white;
+        position: absolute;
+        left: 300px;
+        top: 810px;
+        color: white;
+        z-index: -1;
+        word-wrap: break;
+    }
+    #displayer{
+        margin-top: 0px;
+        visibility: hidden;
+
+    }
+    #youtube-video{
+        position: absolute;
+        left: 300px;
+        top: 70px;
+        z-index: 10;
+    }
+    #theaters{
+        position: absolute;
+        top: 1000px;
+        color: white;
+        font-size: 30px;
+        left: 300px;
+    }
+
+    #thumbnail{
+        width: 200px;
+        height:150px;
+        object-fit: cover;
+    }
+    #info{
+        width: 100%;
+        word-wrap: break;
+    }
+    #info label{
+        font-size: 20px;
+    }
+    #theater{
+        padding: 10px; 
+    }
+
+    #divider button{
+        padding: 5px;
+        position: absolute;
+        left: 1172px;
+        top: 50px;
+        border-radius: 10px;
+    }
+    #suggestions{
+        background-color: white;
+        color: black;
+        font-size: 20px;
+    }
+
+
+</style>
+<script>
+
+    let trailer;
+    let movie_id;
+
+    $(document).ready(function(){
+
+    let value = $('#divider input').val()
+    console.log("This is hidden value"+value)
+
+
+    $('#locationInput').on('input', function() {
+    var input = $(this).val();
+    var suggestionsDiv = $('#suggestions');
+    suggestionsDiv.empty(); // Clear previous suggestions
+    
+    // Simulated list of suggested locations (replace with actual data)
+//    var locations = ["Fairfield, IA, USA", "New York, NY, USA", "Los Angeles,CA,USA", "Chicago,illinois,USA", "Houston,TX,USA", "Philadelphia,PA,USA", "Phoenix,AZ,USA", "San Antonio,TX,USA", "San Diego,CA,USA", "Dallas,TX,USA", "San Jose, CA,USA"];
+     var locations = ["New York", "Los Angeles", "Chicago", "Houston", "Philadelphia", "Phoenix", "San Antonio", "San Diego", "Dallas", "San Jose"];
+    
+    // Filter locations based on user input
+    var filteredLocations = locations.filter(function(location) {
+      return location.toLowerCase().includes(input.toLowerCase());
+    });
+    
+    // Display suggestions
+    filteredLocations.forEach(function(location) {
+      var suggestion = $('<div class="suggestion"></div>').text(location);
+      suggestion.on('click', function() {
+        $('#locationInput').val(location);
+        suggestionsDiv.empty(); // Clear suggestions after selection
+      });
+      suggestionsDiv.append(suggestion);
+    });
+  });
+
+  $('#locationInput').keypress(function(event) {
+    if (event.which === 13) { // 13 is the code for the "Enter" key
+      // Perform your desired action here, for example, submit the form
+      // In this example, we're just clearing the suggestions
+      //alert($(this).val())
+      let movie_id = $('#movie_id').val()
+      let location = $(this).val()
+
+      let encodedloc = encodeURIComponent(location)
+      
+
+      let url = "/movie_details/"+movie_id+"/"+encodedloc
+      alert(url)
+      window.location.href = url
+      
+
+
+
+    }
+  });
+
+
+    $('#divider button').on('click', function(){
+        let hg = $(this).attr('id')
+        
+        console.log(hg)
+        window.location.href = hg;
+        
+
+    })
+    $('#playicon').on('click', function(){
+        trailer = $("#displayer iframe").attr('class')
+        let videoUrl = trailer+'?autoplay=1&mute=1&enablejsapi=1';
+        console.log("This is videoUrl", videoUrl)
+        $('#youtube-video').attr('src', videoUrl); 
+        $("#displayer iframe").css("visibility", "visible")
+
+    })
+
+        $("#container").on('click',function(){
+        let videoUrl = trailer+'?&mute=1&enableapi=1';
+        $('#youtube-video').attr('src',videoUrl);
+    
+            $('#displayer iframe').css('visibility', 'hidden');
+        })
+
+        $('#locationInput').mouseout(function(){
+            $('#suggestionsDiv').empty()
+        })
+    })
+
+
+    </script>
 <body>
-    <div></div>
+    <%- include('header.html') %>
+    <div id="container">
+        <input id="movie_id" type="hidden" value='<%=data['mid'] %>'>
+    <img id="poster_main" src='<%= data['main'] %>'>
+    <div id="playerdiv">
+            <img src='<%= data['img']%>'>
+            <i id="playicon" class="fa far fa-play-circle"></i>
+        </div>
+        <div id="divider">
+            <input id= "hidden" type="hidden" value='<%= data['isPlaying'] %>' >
+            <button id= '<%= data['hg'] %>'>Book Ticket</button>
+            
+        </div>
+
+            <div id="displayer" >
+                <iframe id="youtube-video" class='<%= data['trail'] %>' width="1200" height="815" frameborder="0"  allowfullscreen></iframe>
+            </div>
+
+        <div id="content" style=" font-size: 20px; display: grid; grid-template-columns: auto; gap:10px; justify-content: center;">
+            <label>Title: &nbsp;<%= data['t']%></label>
+            <label>Description: &nbsp; <%= data['o']%></label>
+            <label for=""> Vote Average: &nbsp; <%= data['v1']%> </label>
+            <label for="">Vote Count: &nbsp; <%= data['v2']%> </label>
+        </div>
+
+        <div id="theaters" >
+            <div><label>Theaters</label> in <label ><%= data['location']%> </label>
+                <input type="text" id="locationInput" name="locationInput" placeholder="Type your location..." autocomplete="off">
+                <div id="suggestions"></div>
+                
+            </div>
+            <% for(let ele of data['theaters']) {%>
+                <div id="theaterbox" style="display: flex; gap:10px; border: 1px solid white; padding: 10px;">
+                    <div id ="theater" ><img id="thumbnail" src='<%= ele['thumbnail']%>'> </div>
+                    <div id="info" style="display: grid; grid-template-columns: auto; gap:10px">
+                        <label>Theater: <%= ele['title']%> </label>
+                        <label>Rating: <%= ele['rating']%></label>
+                        <label>Address: <%= ele['address']%></label>
+                        <label>Description:<%= ele['description'] %></label>
+                    </div>
+                    </div>
+                    <br>
+                <%}%>
+            </div>
+        </div>
+    </div>
+    <%- include('footer.html') %>
 </body>
 </html>
