@@ -4,11 +4,9 @@ const ejs = require("ejs");
 const path = require("path");
 var cookieParser = require("cookie-parser");
 const { db } = require("./routers/mongodb");
-const router = require("./routers/router");
+// const router = require("./routers/router");
 const mvlist_router = require("./routers/movielist");
 const homeRouter = require("./routers/homeRouter");
-const router = require("./routers/router");
-const mvlist_router = require("./routers/movielist");
 const app = express();
 
 app.use(cookieParser());
@@ -42,5 +40,3 @@ app.listen(PORT, () => {
 app.use(router);
 app.use(mvlist_router);
 app.use(homeRouter);
-app.use(router);
-app.use(mvlist_router);
