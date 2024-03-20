@@ -8,6 +8,7 @@ const url = 'mongodb://localhost:27017';
 const dbName = 'wmdb';
 
 // Function to connect to MongoDB
+
 async function connectToMongoDB() {
     try {
         const client = await MongoClient.connect(url);
@@ -18,7 +19,7 @@ async function connectToMongoDB() {
         throw error;
     }
 }
- 
+
 // Function to create a new user
 async function createUser(name, username, password, address) {
     try {
@@ -35,6 +36,7 @@ async function createUser(name, username, password, address) {
 }
 
 // Function to find a user by username
+
 async function findUserByUsername(username) {
     try {
         const db = await connectToMongoDB();
@@ -133,8 +135,80 @@ async function insertDummyUsers() {
     }
 }
 
+
+
+const fetch = require('node-fetch');
+
+async function insertNowPlayingMoviesIntoDB() {
+    const url = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=15';
+    const options = {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzN2MzNTc5ODE0Y2FmZGNjMWI4MjEyZmZjMzQ5OTNmZiIsInN1YiI6IjY1ZjVmNWY5ZDhmNDRlMDE2MzRlZWQ1NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xqxXb1-nAaRKKayR2IQSOAkjn7_21BosjYG9cUHMhYE'
+        }
+    };
+
+    try {
+        // Fetch now playing movies from the API
+        const response = await fetch(url, options);
+        const json = await response.json();
+        const movies = json.results;
+
+        // Connect to MongoDB
+        const db = await connectToMongoDB();
+        const collection = db.collection('MovieShowTimes');
+
+        // Insert each movie into MongoDB
+        for (const movie of movies) {
+            const result = await collection.insertOne({
+                movie_id: movie.id,
+                movie_name: movie.title,
+                release_date: movie.release_date,
+                vote_average: movie.vote_average,
+                poster_path: movie.poster_path,
+            });
+            console.log('Inserted movie details into MongoDB:', result.insertedId);
+        }
+    } catch (error) {
+        console.error('Error inserting now playing movies into MongoDB:', error);
+    }
+}
+async function getMovieDetailsByName(movieNames) {
+    try {
+        // Connect to MongoDB
+        const db = await connectToMongoDB();
+        const collection = db.collection('MovieShowTimes');
+
+        // Find movie details for the provided movie names
+        const cursor = collection.find({ movie_name: { $in: movieNames } });
+        const movieDetailsArray = await cursor.toArray();
+
+        // Create a map to store movie details
+        const movieDetailsMap = {};
+        movieDetailsArray.forEach((movieDetails) => {
+            movieDetailsMap[movieDetails.movie_name] = movieDetails;
+        });
+
+        return movieDetailsMap;
+    } catch (error) {
+        console.error('Error fetching movie details:', error);
+        throw error;
+    }
+}
+
+
+
+// Call the function to insert now playing movies into MongoDB
+//insertNowPlayingMoviesIntoDB();
+
+
+
 // Execute the function to insert dummy users
 //insertDummyUsers();
+
+// Call the function to insert data
+//insertMovieShowTimes();
 
 
 // Exporting methods
@@ -143,8 +217,7 @@ module.exports = {
         verifyUserCredentials: verifyUserCredentials,
         createUser: createUser,
         getLatestMovie: getLatestMovie,
-        addMovieToUser: addMovieToUser
+        addMovieToUser: addMovieToUser,
+        getMovieDetailsByName: getMovieDetailsByName
     }
 };
-
-
