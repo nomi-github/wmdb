@@ -44,8 +44,7 @@ async function findUserByUsername(username) {
         const user = await usersCollection.findOne({ "username": username });
         return user;
     } catch (error) {
-        console.error('Failed to find user:', error);
-        throw error;
+        return null;
     }
 }
 
@@ -218,6 +217,7 @@ module.exports = {
         createUser: createUser,
         getLatestMovie: getLatestMovie,
         addMovieToUser: addMovieToUser,
-        getMovieDetailsByName: getMovieDetailsByName
+        getMovieDetailsByName: getMovieDetailsByName,
+        findUserByUsername: findUserByUsername
     }
 };
