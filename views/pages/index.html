@@ -1,6 +1,6 @@
 <html lang="en">
   <head>
-    <title>Sample</title>
+    <title>WMDB</title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/layout.css" />
@@ -52,9 +52,6 @@
             '<path stroke-linecap="round" stroke-linejoin="round" d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />' +
             " </svg>"
         );
-
-
-
         $('.top-container').css({'background-image':'url(https://image.tmdb.org/t/p/original/'+ nowPlaying[0].backdrop_path+')'});
         $('.top-content .title').html(nowPlaying[0].original_title);
         $('.top-content .captions label:first-child').html(nowPlaying[0].release_date.split('-')[0])
@@ -75,9 +72,7 @@
         });
       });
 
-      function openSearch() {
-        $(".search-input input").addClass("open");
-      }
+
       $(".center").on("beforeChange", function (event, slick, currentSlide, nextSlide) {
         console.log("change");
       });

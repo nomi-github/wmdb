@@ -2,7 +2,7 @@ body {
   padding: 0;
   margin: 0;
   background-color: black;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   font-size: 14px;
 }
 .home .top-container {
@@ -206,4 +206,69 @@ body {
 
 .img.slick-center {
   transform: scale(1);
+}
+
+.search-outer {
+  padding: 0 20%;
+  color: white;
+  min-height: calc(100vh - 50px - 250px);
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  height: 220px;
+  border: 1px solid #262626;
+  color: white;
+  gap: 30px;
+}
+.search-container .detail {
+  padding: 40px 10px;
+}
+.search-container .title {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+  text-decoration: none;
+}
+.search-container .desc {
+  width: 600px;
+  color: #ccc;
+  margin-top: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.search-container img {
+  border-radius: 10px 0 0 10px;
+}
+.search-container span {
+  font-size: 11px;
+  color: #ccc;
+}
+.search-container .title:hover {
+  text-decoration: underline;
+}
+.loader-container {
+  height: 100vh;
+  width: 100vw;
+  display: fixed;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loader-container img {
+  margin: auto;
+  width: 20vw;
+  height: auto;
+}
+.search-outer .top-title {
+  font-size: 24px;
+}
+.search-outer .not-found {
+  font-size: 20px;
 }

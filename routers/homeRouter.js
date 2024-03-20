@@ -51,4 +51,15 @@ homeRouter.get("/", async function (req, res, next) {
   // await res.render("pages/index", { data: response });
 });
 
+homeRouter.get("/search", async function (req, res, next) {
+  let name = req.query.name;
+  name.replaceAll(" ", "+");
+  const searchRes = await axios.get(`https://api.themoviedb.org/3/search/movie?query=${name.replaceAll(" ", "+")}&adult=false&api_key=${process.env.API_KEY}&page=1`);
+  if (searchRes.status != 200) {
+    res.render("error");
+  }
+  // res.send(searchRes.data.results);
+  await res.render("pages/search", { results: searchRes.data.results, name: req.query.name });
+});
+
 module.exports = homeRouter;

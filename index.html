@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Biryani:wght@200;300;400;600;700;800;900&family=Noto+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,100&family=Play:wght@400;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"
+      rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
+      //const url = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1';
+      //const url = 'https://api.themoviedb.org/3/movie/944401/recommendations?language=en-US&page=1';
+      //const url = 'https://api.themoviedb.org/3/movie/popular';
+      const url = "https://api.themoviedb.org/3/movie/1011985/watch/providers";
+      const options = {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzN2MzNTc5ODE0Y2FmZGNjMWI4MjEyZmZjMzQ5OTNmZiIsInN1YiI6IjY1ZjVmNWY5ZDhmNDRlMDE2MzRlZWQ1NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xqxXb1-nAaRKKayR2IQSOAkjn7_21BosjYG9cUHMhYE",
+        },
+      };
 
-    //const url = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1';
-    //const url = 'https://api.themoviedb.org/3/movie/944401/recommendations?language=en-US&page=1';
-    //const url = 'https://api.themoviedb.org/3/movie/popular';
-    const url = 'https://api.themoviedb.org/3/movie/1011985/watch/providers'
-    const options = {
-    method: 'GET',
-    headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzN2MzNTc5ODE0Y2FmZGNjMWI4MjEyZmZjMzQ5OTNmZiIsInN1YiI6IjY1ZjVmNWY5ZDhmNDRlMDE2MzRlZWQ1NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xqxXb1-nAaRKKayR2IQSOAkjn7_21BosjYG9cUHMhYE'
-    }
-    };
-
-    $(document).ready(function() {
-    /*    fetch(url, options)
+      $(document).ready(function () {
+        /*    fetch(url, options)
     .then(res => res.json())
     .then(json => {
         console.log(json);
@@ -30,55 +35,50 @@
 
     })
     .catch(err => console.error('error:' + err));*/
-    let latitude = '41.006630';
-    let longitude = '-91.965050';
+        let latitude = "41.006630";
+        let longitude = "-91.965050";
 
-    let data;// = getNearbyTheaters(latitude, longitude);
+        let data; // = getNearbyTheaters(latitude, longitude);
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+          data = "Geolocation is not supported by this browser.";
+        }
+        $("div").html(JSON.stringify(data));
+      });
 
-    } else {
-      data = "Geolocation is not supported by this browser.";
-    }
-    $("div").html(JSON.stringify(data));
-
-    })
-
-    function showPosition(position) {
-        $("div").html(position + "||||" + position.coords.latitude + ","+position.coords.longitude);
+      function showPosition(position) {
+        $("div").html(position + "||||" + position.coords.latitude + "," + position.coords.longitude);
         // x.innerHTML = "Latitude: " + position.coords.latitude +
         // "<br>Longitude: " + position.coords.longitude;
-        }
+      }
 
-    
+      let apiKey =
+        "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzN2MzNTc5ODE0Y2FmZGNjMWI4MjEyZmZjMzQ5OTNmZiIsInN1YiI6IjY1ZjVmNWY5ZDhmNDRlMDE2MzRlZWQ1NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xqxXb1-nAaRKKayR2IQSOAkjn7_21BosjYG9cUHMhYE";
 
+      function getNearbyTheaters(latitude, longitude) {
+        const url2 =
+          "https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&region=US&include_adult=false&include_video=false&page=1&primary_release_date.gte=2022-01-01&primary_release_date.lte=2024-03-16&with_release_type=3|2&with_watch_monetization_types=cinema&sort_by=release_date.asc&with_watch_providers=8;";
 
-    let apiKey = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzN2MzNTc5ODE0Y2FmZGNjMWI4MjEyZmZjMzQ5OTNmZiIsInN1YiI6IjY1ZjVmNWY5ZDhmNDRlMDE2MzRlZWQ1NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xqxXb1-nAaRKKayR2IQSOAkjn7_21BosjYG9cUHMhYE';
-
-    function getNearbyTheaters(latitude, longitude) {
-    const url2 = 'https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&region=US&include_adult=false&include_video=false&page=1&primary_release_date.gte=2022-01-01&primary_release_date.lte=2024-03-16&with_release_type=3|2&with_watch_monetization_types=cinema&sort_by=release_date.asc&with_watch_providers=8;'
-
-    return fetch(url2)
-        .then(response => {
+        return fetch(url2)
+          .then((response) => {
             if (!response.ok) {
-                throw new Error('Failed to fetch theaters');
+              throw new Error("Failed to fetch theaters");
             }
             return response.json();
-        })
-        .then(data => {
+          })
+          .then((data) => {
             return data.results;
-        })
-        .catch(error => {
-            console.error('Error:', error);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
             return [];
-        });
-}
-
-   
+          });
+      }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <div></div>
-</body>
+  </body>
 </html>

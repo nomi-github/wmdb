@@ -59,5 +59,7 @@ function genres() {
       return err;
     });
 }
+
+function search() {}
 const homeHelper = { nowPlaying: nowPlaying, popular: popular, recommend: recommend, genres: genres };
 module.exports = homeHelper;
