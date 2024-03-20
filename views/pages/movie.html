@@ -87,11 +87,11 @@
     }
     #content{
         width: 945px;
-        /*height: 500px;*/
-        border: 1px solid white;
+        /*height: 500px;
+        border: 1px solid white;*/
         position: absolute;
         left: 300px;
-        top: 810px;
+        top: 770px;
         color: white;
         z-index: -1;
         word-wrap: break;
@@ -153,10 +153,100 @@
     .grid-items{
         row-gap: 10px;
     }
+    .movies-container {
+    position:relative;
+
+    top: 700px;
+    left: 300px;
+    flex: 1;
+    /* background-color: #001232; */
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    padding-top: 100px;
+}
+  .movies-slider {
+    width: 945px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .slider-prev, .slider-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 2rem;
+    color: white;
+    z-index: 900;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0 0.5rem;
+  }
+  .slider-prev { left: 0; }
+  .slider-next { right: 0; }
+  .slider-inner {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+  .movie-poster {
+    min-width: 18%;
+    background-color: #444;
+    height: 340px;
+    margin-right: 10px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    cursor: pointer;
+    position: relative;
+  } 
+
+  .movie-poster-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin-right: 10px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    z-index: -10;
+  }
+
 
 
 </style>
 <script>
+       function moveSlide(direction, sliderType) {
+        let sliderInnerSelector = '.slider-inner';
+        if (sliderType === 'movies1') {
+          sliderInnerSelector = '.movies1-inner';
+        }else if(sliderType === 'movies2'){
+          sliderInnerSelector = '.movies2-inner';
+        }else if(sliderType === 'movies3'){
+          sliderInnerSelector = '.movies3-inner';
+        }else if(sliderType === 'movies4'){
+          sliderInnerSelector = '.movies4-inner';
+        }else{
+          sliderInnerSelector = '.movies5-inner';
+        }
+      
+        const sliderInner = document.querySelector(sliderInnerSelector);
+        const slides = sliderInner.querySelectorAll('.movie-poster');
+        const slidesWidth = slides[0].offsetWidth + 10; // Assuming 10px is the margin-right
+        let maxIndex = slides.length - 5; // Adjusting to ensure we don't slide past the end
+      
+        if (!window["currentIndex_" + sliderType]) window["currentIndex_" + sliderType] = 0;
+      
+        window["currentIndex_" + sliderType] += direction;
+      
+        if (window["currentIndex_" + sliderType] < 0) {
+          window["currentIndex_" + sliderType] = 0; // Prevent sliding beyond the first poster
+        } else if (window["currentIndex_" + sliderType] > maxIndex) {
+          window["currentIndex_" + sliderType] = maxIndex; // Prevent sliding beyond the last poster
+        }
+      
+        const moveAmount = -(slidesWidth * window["currentIndex_" + sliderType]);
+        sliderInner.style.transform = `translateX(${moveAmount}px)`;
+      }
 
     let trailer;
     let movie_id;
@@ -270,6 +360,34 @@
             <label class="grid-items" for=""> Vote Average: &nbsp; <%= data['v1']%> </label>
             <label class="grid-items" for="">Vote Count: &nbsp; <%= data['v2']%> </label>
         </div>
+
+        
+
+        <main class="movies-container">
+            <%  if( data['movies1'].length > 0) { %>
+            <div class="movies-slider">
+              <div class="slider-prev" onclick="moveSlide(-5, 'movies1')">&#10094;</div>
+              <div class="slider-inner movies1-inner">
+                <% data['movies1'].forEach(movie => { %>
+                  <div class="movie-poster">
+                    <img class="movie-poster-img" onclick="goDetail('<%=movie.id%>')" src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
+                    <div class="movie-info">
+                      <h3><%= movie.title %></h3>
+                      <label>Rating: <%= (movie.vote_average).toFixed(1) %></label><br>
+                      <label>Release Date: <%= movie.release_date %></label>
+                    </div>
+                  </div>
+                <% }) %>
+              </div>
+              <div class="slider-next" onclick="moveSlide(5, 'movies1')">&#10095;</div>
+            </div>
+            <% }else{ %>
+              <p style="margin-top: 0px;">No items were found that match your query.</p> 
+            <% } %>
+        </main>
+
+
+
     </div>
     <%- include('footer.html'); %>
 </body>

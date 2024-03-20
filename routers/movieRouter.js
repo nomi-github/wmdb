@@ -62,7 +62,7 @@ router.get('/movie_details/:id', async function(req, res, next){
                                     v1:vote_avg, v2:vote_count, 
                                     img:playimg, main:mainimg, 
                                     mid:movie_id, hg:homepg,isPlaying:isNow,
-                                    trail:trailer  }})
+                                    trail:trailer, movies1: recommendRes.data.results }})
   })
   .catch(err => console.error('error:' + err));
 
