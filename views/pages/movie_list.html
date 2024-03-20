@@ -123,7 +123,7 @@
                       <div class="movie-poster" onclick="goDetail('<%=movie.id%>')" >
                         <img class="movie-poster-img" src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
                         <div class="movie-info">
-                          <p><%= movie.title %></p>
+                          <p style="font-weight: bold;"><%= movie.title %></p>
                           <p>Rating: <%= (movie.vote_average).toFixed(1) %></p>
                           <p>Release Date: <%= movie.release_date %></p>
                         </div>
