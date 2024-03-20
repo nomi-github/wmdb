@@ -193,7 +193,7 @@ form {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    justify-content: space-evenly;
+    justify-content: left;
 }
 
 #selectedLocation {
@@ -202,12 +202,17 @@ form {
 }
 
 
+.notFound {
+    font-style: italic;
+}
+
+.lightText {
+    color:rgb(94, 94, 94);
+}
 .poster {
     /* height: 200px; */
     display: flex;
 }
-
-
 
 .posterTitle {
     font-size: 17px;

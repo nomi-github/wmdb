@@ -11,8 +11,8 @@ theatreRouter.get("/theaters", async function (req, res, next) {
     let today = new Date();
     let location = req.cookies.location;
 
-    if (!location) {        
-        location = getCurrentLocation();
+    if (!location) {
+        location = await getCurrentLocation();
         console.log('getting the location', location);
         res.cookie("location", location);
     }
@@ -57,7 +57,7 @@ theatreRouter.get("/getShowTimes/:selectedTheaterName", async function (req, res
     let selectedTheaterName = req.params.selectedTheaterName;
     console.log('selectedTheaterNames', selectedTheaterName);
     let result = [];
-    let localTheaterNames = selectedTheaterName=="all" ? req.cookies.localTheaterNames: [selectedTheaterName];
+    let localTheaterNames = selectedTheaterName == "all" ? req.cookies.localTheaterNames : [selectedTheaterName];
 
     for (let name of localTheaterNames) {
         let obj = { theaterName: name };
@@ -66,13 +66,15 @@ theatreRouter.get("/getShowTimes/:selectedTheaterName", async function (req, res
         obj.showTimes = showTimes.showtimes;
         let movieNamesSet = new Set();
         if (obj.showTimes) {
-            iterateOverMovies(obj, async function (movie) {
+            console.log('movies first iteration', obj.showTimes);
+            iterateOverMovies(obj, function (movie) {
                 movieNamesSet.add(movie.name);
             });
             console.log('movieNames', movieNamesSet);
             const movieMap = await db.getMovieDetailsByName(Array.from(movieNamesSet));
-            iterateOverMovies(obj, async function (movie) {
-                movie.movieDetail = movieMap[movie.name];
+            console.log("movieMap", movieMap)
+            iterateOverMovies(obj, function (movie) {
+                 movie.movieDetail = movieMap[movie.name];
             });
         }
         result.push(obj);
@@ -81,11 +83,14 @@ theatreRouter.get("/getShowTimes/:selectedTheaterName", async function (req, res
     res.send(result);
 })
 
-async function iterateOverMovies(obj, callback) {
+function iterateOverMovies(obj, callback) {
+    console.log("iterateOverMovies", obj.showTimes);
     for (let date of obj.showTimes) {
-        for (movie of date.movies) {
-            if (movie.name) {
-                callback(movie);
+        if (date.movies) {
+            for (movie of date.movies) {
+                if (movie.name) {
+                    callback(movie);
+                }
             }
         }
     }

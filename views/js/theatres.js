@@ -53,8 +53,8 @@ function createPlayTimeDiv(data, selectedDate) {
                         html += "<div class='moviePoster flex-transforming gap_10' onclick='goToDetail(\"" + movie.movieDetail.movie_id + "\")'>";
                             html += "<div class='poster gap_10 flex-transforming'><img src='https://image.tmdb.org/t/p/w500" + movie.movieDetail.poster_path + "' alt=''>";
                                 html += "<div class='flex-column gap_10 padding_10'><label class='posterTitle'>" + movie.name + "</label>"+
-                                        "<label style='color:rgb(94, 94, 94);'>"+movie.movieDetail.release_date+ "</label>"+
-                                        "<label style='color:rgb(94, 94, 94);'>Rating: " +movie.movieDetail.vote_average+"</label></div></div>";
+                                        "<label class='lightText'>"+movie.movieDetail.release_date+ "</label>"+
+                                        "<label class='lightText'>Rating: " +movie.movieDetail.vote_average+"</label></div></div>";
                                 html += "<div class='gap_5 padding_10 flex-column'><div class='typeText'>"+(movie.showing[0].type?movie.showing[0]:'Standard')+"</div>";
                         for (let time of movie.showing[0].time) {
                             //console.log('time', time);
@@ -68,7 +68,7 @@ function createPlayTimeDiv(data, selectedDate) {
             }
         }
     } if (count==0) {
-        html += "<br>Sorry we could not find any showtimes for selected date";
+        html += "<br><label class='notFound lightText'>Sorry we could not find any showtimes for selected date</label>";
     }
     html += "</div></div>";
     return html;
