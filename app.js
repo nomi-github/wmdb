@@ -4,6 +4,10 @@ const ejs = require("ejs");
 const path = require("path");
 var cookieParser = require('cookie-parser');
 
+var cookieParser = require("cookie-parser");
+const { db } = require("./routers/mongodb");
+const router = require("./routers/router");
+const movierouter = require("./routers/movieRouter");
 const app = express();
 
 app.set("view engine", "html");
@@ -39,6 +43,6 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-app.use(mvlist_router);
-app.use(homeRouter);
-app.use(credential_router);
+
+app.use(router);
+app.use(movierouter);
