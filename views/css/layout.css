@@ -8,7 +8,7 @@
   top: 0;
   justify-content: space-between;
   font-size: 14px;
-  padding: 10 70px;
+  padding: 10px 70px;
   flex: 1;
   z-index: 999;
   background-color: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 10%, transparent);
@@ -148,4 +148,24 @@ ul.profile {
 }
 .right label.arrow:hover .profile {
   display: block;
+}
+
+.search-container {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.loader-container {
+  height: 100vh;
+  width: 100vw;
+  display: fixed;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loader-container img {
+  margin: auto;
+  width: 20vw;
+  height: auto;
 }

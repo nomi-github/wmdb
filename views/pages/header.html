@@ -5,8 +5,22 @@
         if ($(window).scrollTop() > 50) {
           $(".header").addClass("active");
         } else {
-          //remove the background property so it comes transparent again (defined in your css)
           $(".header").removeClass("active");
+        }
+      });
+      function openSearch() {
+        $(".search-input input").addClass("open");
+      }
+      $(document).on("keypress", "#searchInput", function (e) {
+        if (e.which == 13) {
+          var inputVal = $(this).val();
+          // $("body").html('<div class="loader-container"><img src="/images/loading.gif" /></div>');
+          // $.ajax({
+          //   url: "/search?name=" + inputVal,
+          //   type: "GET",
+          //   dataType: "json", // added data type
+          // });
+          window.location.replace("/search?name=" + inputVal);
         }
       });
     </script>
@@ -34,7 +48,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
           </button>
-          <input type="text" placeholder="Movie name" />
+          <input type="text" placeholder="Movie name" id="searchInput" />
         </div>
         <div class="profile-container"></div>
         <label class="arrow">
