@@ -37,6 +37,5 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-app.use(router);
 app.use(mvlist_router);
 app.use(homeRouter);
