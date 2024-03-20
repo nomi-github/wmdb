@@ -38,8 +38,8 @@
           <div class="slider-prev" onclick="moveSlide(-5, 'movies1')">&#10094;</div>
           <div class="slider-inner movies1-inner">
             <%movies1.forEach(movie => { %>
-              <div class="movie-poster">
-                <img class="movie-poster-img" onclick="goDetail('<%=movie.id%>')" src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
+              <div class="movie-poster" onclick="goDetail('<%=movie.id%>')" >
+                <img class="movie-poster-img" src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
                 <div class="movie-info">
                   <p><%= movie.title %></p>
                   <label>Rating: <%= (movie.vote_average).toFixed(1) %></label><br>
@@ -60,8 +60,8 @@
             <div class="slider-prev" onclick="moveSlide(-5, 'movies2')">&#10094;</div>
             <div class="slider-inner movies2-inner">
               <%movies2.forEach(movie => { %>
-                <div class="movie-poster">
-                  <img class="movie-poster-img" onclick="goDetail('<%=movie.id%>')"  src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
+                <div class="movie-poster" onclick="goDetail('<%=movie.id%>')" >
+                  <img class="movie-poster-img" src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
                   <div class="movie-info">
                     <p><%= movie.title %></p>
                     <label>Rating: <%= (movie.vote_average).toFixed(1) %></label><br>
@@ -80,8 +80,8 @@
               <div class="slider-prev" onclick="moveSlide(-5, 'movies3')">&#10094;</div>
               <div class="slider-inner movies3-inner">
                 <%movies3.forEach(movie => { %>
-                  <div class="movie-poster">
-                    <img class="movie-poster-img" onclick="goDetail('<%=movie.id%>')"  src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
+                  <div class="movie-poster"  onclick="goDetail('<%=movie.id%>')">
+                    <img class="movie-poster-img" src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
                     <div class="movie-info">
                       <p><%= movie.title %></p>
                       <label>Rating: <%= (movie.vote_average).toFixed(1) %></label><br>
@@ -100,8 +100,8 @@
                 <div class="slider-prev" onclick="moveSlide(-5, 'movies4')">&#10094;</div>
                 <div class="slider-inner movies4-inner">
                   <%movies4.forEach(movie => { %>
-                    <div class="movie-poster">
-                      <img class="movie-poster-img" onclick="goDetail('<%=movie.id%>')" src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
+                    <div class="movie-poster"  onclick="goDetail('<%=movie.id%>')">
+                      <img class="movie-poster-img" src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
                       <div class="movie-info">
                         <p><%= movie.title %></p>
                         <label>Rating: <%= (movie.vote_average).toFixed(1) %></label><br>
@@ -120,8 +120,8 @@
                   <div class="slider-prev" onclick="moveSlide(-5, 'movies5')">&#10094;</div>
                   <div class="slider-inner movies5-inner">
                     <%movies5.forEach(movie => { %>
-                      <div class="movie-poster">
-                        <img class="movie-poster-img" onclick="goDetail('<%=movie.id%>')" src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
+                      <div class="movie-poster" onclick="goDetail('<%=movie.id%>')" >
+                        <img class="movie-poster-img" src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
                         <div class="movie-info">
                           <p><%= movie.title %></p>
                           <p>Rating: <%= (movie.vote_average).toFixed(1) %></p>
@@ -212,11 +212,9 @@
       });
 
       function goDetail(movie_id){
-        alert(movie_id);
-        const url = '/pages/movie/${movieId}';
+        const url = `movie_details/${movie_id}`;
         window.location.href = url;
       }
-      
       </script>
   </body>
 </html>
