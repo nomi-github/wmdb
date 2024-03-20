@@ -17,6 +17,15 @@ async function connectToMongoDB() {
         console.error('Failed to connect to MongoDB:', error);
         throw error;
     }
+async function connectToMongoDB() {
+    try {
+        const client = await MongoClient.connect(url);
+        console.log('Connected successfully to MongoDB');
+        return client.db(dbName);
+    } catch (error) {
+        console.error('Failed to connect to MongoDB:', error);
+        throw error;
+    }
 }
  
 // Function to create a new user
@@ -25,7 +34,7 @@ async function createUser(name, username, password, address) {
         const db = await connectToMongoDB();
         const usersCollection = db.collection('Users');
         const hashedPassword = await bcrypt.hash(password, 10);
-        const result = await usersCollection.insertOne({ username, password: hashedPassword });
+        const result = await usersCollection.insertOne({ name, username, password: hashedPassword });
         console.log('User created successfully:', result);
         return result;
     } catch (error) {
@@ -45,9 +54,34 @@ async function findUserByUsername(username) {
         console.error('Failed to find user:', error);
         throw error;
     }
+async function findUserByUsername(username) {
+    try {
+        const db = await connectToMongoDB();
+        const usersCollection = db.collection('Users');
+        const user = await usersCollection.findOne({ "username": username });
+        return user;
+    } catch (error) {
+        console.error('Failed to find user:', error);
+        throw error;
+    }
 }
 
 // Function to verify user credentials
+async function verifyUserCredentials(username, password) {
+    try {
+        const user = await findUserByUsername(username);
+        console.log('user: ' + JSON.stringify(user));
+        if (!user) {
+            return false; // User not found
+        }
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        console.log('password match', user.password, passwordMatch);
+        const latestMovie = await getLatestMovie(username);
+        return { loginResult: passwordMatch, latestMovie: latestMovie };
+    } catch (error) {
+        console.error('Failed to verify user credentials:', error);
+        throw error;
+    }
 async function verifyUserCredentials(username, password) {
     try {
         const user = await findUserByUsername(username);

@@ -1,3 +1,4 @@
+const axios = require("axios");
 const dotenv = require("dotenv");
 dotenv.config();
 const fetch = require("node-fetch");
@@ -22,18 +23,12 @@ function nowPlaying(page) {
       return err;
     });
 }
-function popular(page) {
-  url = "https://api.themoviedb.org/3/movie/popular?language=en-US&page=";
-  fetch(url, options)
-    .then((res) => res.json())
-    .then((json) => {
-      console.log("popu;lar", json);
-      return json.results;
-    })
-    .catch((err) => {
-      console.error("error:" + err);
-      return err;
-    });
+async function popular(page) {
+  url = "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
+  const popularRes = await axios.get(`https://api.themoviedb.org/3/movie/popular?language=en-US&api_key=${process.env.API_KEY}&page=1`);
+  if (popularRes.status == 200) {
+    return popularRes.data.results;
+  } else return [];
 }
 
 function recommend(movie_id) {
@@ -64,5 +59,7 @@ function genres() {
       return err;
     });
 }
+
+function search() {}
 const homeHelper = { nowPlaying: nowPlaying, popular: popular, recommend: recommend, genres: genres };
 module.exports = homeHelper;

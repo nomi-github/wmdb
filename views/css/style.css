@@ -2,20 +2,19 @@ body {
   padding: 0;
   margin: 0;
   background-color: black;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   font-size: 14px;
 }
 .home .top-container {
   width: 100%;
   height: 40.25vw;
-  background-image: url("./../images/damsel.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
 }
 .home .top-content {
   /* mask-image: linear-gradient(90deg, transparent, #000); */
   height: 100%;
-  width: auto;
+  width: 50%;
   background: linear-gradient(270deg, transparent, #000);
   display: flex;
   flex-direction: column;
@@ -39,12 +38,14 @@ body {
   border-right: none;
 }
 
-.top-content .desc {
+.top-content .desc,
+.top-content .genre {
   margin-top: 10px;
   width: 70%;
   overflow: hidden;
 }
-.top-content .desc label {
+.top-content .desc label,
+.top-content .genre label {
   color: red;
   margin-right: 10px;
 }
@@ -64,6 +65,7 @@ body {
 .slick-next.slick-arrow {
   left: 120px;
 }
+.slick-arrow:hover,
 .top-content .slider-button button:hover {
   color: rgba(255, 255, 255, 1);
   cursor: pointer;
@@ -86,8 +88,8 @@ body {
 }
 
 .slider .img img {
-  width: calc((100vw - 300px) / 5);
-  height: 300px;
+  width: calc((100vw - 400px) / 5);
+  height: auto;
 }
 
 .slider .img.active img {
@@ -147,7 +149,8 @@ body {
 .movies .card-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 20px;
+  overflow: hidden;
+  gap: 40px;
 }
 .movies .card-inner {
   width: 100%;
@@ -159,12 +162,12 @@ body {
 .movies .card-outer:hover .card-inner {
   height: 100%;
 }
-.movies .card-outer:hover .card-inner p {
+.movies .card-outer:hover .card-inner a {
   display: block;
 }
-.card-inner p {
+.card-inner a {
   color: white;
-  bottom: 10px;
+  bottom: 30px;
   left: 10px;
   font-weight: 600;
   font-size: 20px;
@@ -197,4 +200,152 @@ body {
 }
 .slick-slide {
   height: auto !important;
+  transition: all 0.5s ease-in-out;
+  transform: scale(0.8);
+}
+
+.img.slick-center {
+  transform: scale(1);
+}
+
+.search-outer {
+  padding: 0 20%;
+  color: white;
+  min-height: calc(100vh - 50px - 250px);
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  height: 220px;
+  border: 1px solid #262626;
+  color: white;
+  gap: 30px;
+}
+.search-container .detail {
+  padding: 40px 10px;
+}
+.search-container .title {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+  text-decoration: none;
+}
+.search-container .desc {
+  width: 600px;
+  color: #ccc;
+  margin-top: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.search-container img {
+  border-radius: 10px 0 0 10px;
+}
+.search-container span {
+  font-size: 11px;
+  color: #ccc;
+}
+.search-container .title:hover {
+  text-decoration: underline;
+}
+.loader-container {
+  height: 100vh;
+  width: 100vw;
+  display: fixed;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loader-container img {
+  margin: auto;
+  width: 20vw;
+  height: auto;
+}
+.search-outer .top-title {
+  font-size: 24px;
+}
+.search-outer .not-found {
+  font-size: 20px;
+}
+
+.login-outer {
+  background-image: url("../images/poster-backgound.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.login-container {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card {
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 30px 60px;
+  width: 350px;
+  text-align: left;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.login-card .title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 0;
+}
+.login-card label {
+  color: rgba(255, 255, 255, 0.7);
+}
+.login-card input {
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  margin-bottom: 20px;
+  margin-top: 5px;
+  color: white;
+  padding: 0 10px;
+  font-size: 16px;
+}
+.login-card button {
+  background-color: #ff0000;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  border: none;
+}
+.login-card .forgot {
+  font-size: 14px;
+  margin-top: 10px;
+  color: #0071eb;
+}
+.login-card .new {
+  margin-top: 30px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.login-card .new a {
+  color: white;
+}
+
+.login-card button:hover {
+  cursor: pointer;
+  background-color: rgb(178, 0, 0);
 }

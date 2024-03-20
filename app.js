@@ -12,7 +12,10 @@ app.engine("html", ejs.renderFile);
 // CUSTOM ROUTERS
 const { db } = require("./routers/mongodb");
 var {theatreRouter, getCurrentLocation} = require('./routers/theatres.js');
-const router = require("./routers/router");
+// const router = require("./routers/router");
+const mvlist_router = require("./routers/movielist");
+const homeRouter = require("./routers/homeRouter");
+const credential_router = require("./routers/credential");
 
 // CONFIGURATION MIDDLEWARES
 app.use(cookieParser());
@@ -43,4 +46,6 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-
+app.use(mvlist_router);
+app.use(homeRouter);
+app.use(credential_router);
