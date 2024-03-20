@@ -272,3 +272,75 @@ body {
 .search-outer .not-found {
   font-size: 20px;
 }
+
+.login-outer {
+  background-image: url("../images/poster-backgound.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.login-container {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card {
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 30px 60px;
+  width: 300px;
+  text-align: left;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.login-card .title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 0;
+}
+.login-card label {
+  color: rgba(255, 255, 255, 0.7);
+}
+.login-card input {
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  margin-bottom: 20px;
+  margin-top: 5px;
+  color: white;
+  padding: 0 10px;
+  font-size: 16px;
+}
+.login-card button {
+  background-color: red;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  border: none;
+}
+.login-card .forgot {
+  font-size: 14px;
+  margin-top: 10px;
+  color: #0071eb;
+}
+.login-card .new {
+  margin-top: 30px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.login-card .new a {
+  color: white;
+}
