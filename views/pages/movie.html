@@ -21,8 +21,8 @@
         font-size: 14px;
     }
     #container {
+        
         width: 100%;
-        height: 100%;
         position: absolute;
         top: 0px;
         height: 500px;
@@ -30,7 +30,19 @@
         z-index: -1;
         mask-image: linear-gradient(to left, transparent, black);
     }
+    #postercont{
+
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        height: 500px;
+        background: linear-gradient(to left, transparent, rgb(26, 26, 26));
+        z-index: -1;
+        mask-image: linear-gradient(to left, transparent, black);
+
+    }
     #poster_main {
+        border: 1px solid rgba(0, 0, 0, 0.0);
         opacity: 0.5;
         /*width: 100%*/
         ;
@@ -42,7 +54,7 @@
         object-fit: cover;
     }
 
-    #divider {
+    #divider  {
         position: absolute;
         top: 500px;
         background-color: rgb(41, 40, 40);
@@ -135,13 +147,30 @@
         font-size: 20px;
     }
 
-    #divider button {
+    #divider button{
         padding: 5px;
-        position: absolute;
+       /* position: absolute;*/
         left: 1172px;
-        top: 50px;
+       /* top: 50px;*/
         border-radius: 10px;
+        width: 100px;
+        background-color: #dba205;
+        border: none
+        
     }
+
+    #book {
+        position: absolute;
+        top:50px
+
+    }
+    #visit{
+        position: absolute;
+        top: 100px;
+
+    }
+
+
 
     .footer {
         margin-top: 100%;
@@ -215,6 +244,10 @@
     }
 </style>
 <script>
+    function findTheaters(mid){
+        alert(mid)
+        window.location.href = "/theaters"
+    }
     function goDetail(movie_id){
         let url = "/movie_details/"+movie_id;
         window.location.href = url;
@@ -252,7 +285,14 @@
     let movie_id;
 
     $(document).ready(function () {
-
+    
+        var hiddenValue = $('#hidden').val();
+        
+        // Check the value of the hidden input
+        if (hiddenValue === 'true') {
+            // Disable the button
+            $('#visit').prop('disabled', true);
+        } 
      $(document).on('click', function (event) {
             var iframe = $('#youtube-video');
             var iframeRect = iframe[0].getBoundingClientRect();
@@ -272,13 +312,14 @@
         let value = $('#divider input').val()
         console.log("This is hidden value" + value)
         
-        $('#divider button').on('click', function () {
-            let hg = $(this).attr('id')
+        $('#visit').on('click', function () {
+            let hg = $(this).attr('class')
             console.log(hg)
             window.location.href = hg;
         })
         
         $('#playicon').on('click', function () {
+            alert("Clicked")
             trailer = $("#displayer iframe").attr('class')
             let videoUrl = trailer + '?autoplay=1&mute=1&enablejsapi=1';
             console.log("This is videoUrl", videoUrl)
@@ -292,14 +333,15 @@
     <%- include('header.html'); %>
         <div id="container">
             <input id="movie_id" type="hidden" value='<%=data[' mid'] %>'>
-            <img id="poster_main" src='<%= data['main'] %>'>
+            </div id="postercont"><img id="poster_main" src='<%= data['main'] %>'></div>
             <div id="playerdiv">
                 <img src='<%= data['img']%>'>
                 <i id="playicon" class="fa far fa-play-circle"></i>
             </div>
-            <div id="divider">
+            <div id="divider" style="display: grid; grid-template-columns: auto; gap:25px">
                 <input id="hidden" type="hidden" value='<%= data['isPlaying'] %>'>
-                <button id='<%= data['hg'] %>'>Book Ticket</button>
+                <button id ="visit" class='<%= data['hg'] %>' >Visit</button>
+                <button id="book" onclick="findTheaters('<%= data.mid %>')">Book ticket</button>
             </div>
             <div id="displayer">
                 <iframe id="youtube-video" class='<%= data['trail'] %>' width="1200" height="815" frameborder="0"
