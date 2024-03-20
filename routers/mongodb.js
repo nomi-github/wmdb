@@ -25,7 +25,7 @@ async function createUser(name, username, password, address) {
         const db = await connectToMongoDB();
         const usersCollection = db.collection('Users');
         const hashedPassword = await bcrypt.hash(password, 10);
-        const result = await usersCollection.insertOne({ username, password: hashedPassword });
+        const result = await usersCollection.insertOne({ name, username, password: hashedPassword });
         console.log('User created successfully:', result);
         return result;
     } catch (error) {
