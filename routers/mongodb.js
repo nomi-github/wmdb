@@ -8,15 +8,7 @@ const url = 'mongodb://localhost:27017';
 const dbName = 'wmdb';
 
 // Function to connect to MongoDB
-async function connectToMongoDB() {
-    try {
-        const client = await MongoClient.connect(url);
-        console.log('Connected successfully to MongoDB');
-        return client.db(dbName);
-    } catch (error) {
-        console.error('Failed to connect to MongoDB:', error);
-        throw error;
-    }
+
 async function connectToMongoDB() {
     try {
         const client = await MongoClient.connect(url);
@@ -27,7 +19,7 @@ async function connectToMongoDB() {
         throw error;
     }
 }
- 
+
 // Function to create a new user
 async function createUser(name, username, password, address) {
     try {
@@ -44,16 +36,7 @@ async function createUser(name, username, password, address) {
 }
 
 // Function to find a user by username
-async function findUserByUsername(username) {
-    try {
-        const db = await connectToMongoDB();
-        const usersCollection = db.collection('Users');
-        const user = await usersCollection.findOne({ "username": username });
-        return user;
-    } catch (error) {
-        console.error('Failed to find user:', error);
-        throw error;
-    }
+
 async function findUserByUsername(username) {
     try {
         const db = await connectToMongoDB();
@@ -67,21 +50,6 @@ async function findUserByUsername(username) {
 }
 
 // Function to verify user credentials
-async function verifyUserCredentials(username, password) {
-    try {
-        const user = await findUserByUsername(username);
-        console.log('user: ' + JSON.stringify(user));
-        if (!user) {
-            return false; // User not found
-        }
-        const passwordMatch = await bcrypt.compare(password, user.password);
-        console.log('password match', user.password, passwordMatch);
-        const latestMovie = await getLatestMovie(username);
-        return { loginResult: passwordMatch, latestMovie: latestMovie };
-    } catch (error) {
-        console.error('Failed to verify user credentials:', error);
-        throw error;
-    }
 async function verifyUserCredentials(username, password) {
     try {
         const user = await findUserByUsername(username);
@@ -193,12 +161,13 @@ async function insertNowPlayingMoviesIntoDB() {
 
         // Insert each movie into MongoDB
         for (const movie of movies) {
-            const result = await collection.insertOne({ movie_id: movie.id, 
-                                                        movie_name: movie.title, 
-                                                        release_date: movie.release_date,
-                                                        vote_average: movie.vote_average,
-                                                        poster_path: movie.poster_path,
-                                                    });
+            const result = await collection.insertOne({
+                movie_id: movie.id,
+                movie_name: movie.title,
+                release_date: movie.release_date,
+                vote_average: movie.vote_average,
+                poster_path: movie.poster_path,
+            });
             console.log('Inserted movie details into MongoDB:', result.insertedId);
         }
     } catch (error) {
@@ -252,5 +221,3 @@ module.exports = {
         getMovieDetailsByName: getMovieDetailsByName
     }
 };
-
-

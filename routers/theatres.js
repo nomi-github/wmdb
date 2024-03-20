@@ -49,7 +49,7 @@ theatreRouter.post("/changeLocation", function (req, res, next) {
     res.redirect("back");
 })
 
-let serpApiKey = "e6ae8922bede93a3c646ceefd0231588ffecdb8a8d556f3b063a100b8b4c8a91";
+//let serpApiKey = "e6ae8922bede93a3c646ceefd0231588ffecdb8a8d556f3b063a100b8b4c8a91";
 const { getJson } = require("serpapi");
 const { json } = require('body-parser');
 
@@ -61,7 +61,7 @@ theatreRouter.get("/getShowTimes/:selectedTheaterName", async function (req, res
 
     for (let name of localTheaterNames) {
         let obj = { theaterName: name };
-        let showTimes = await getJson({ q: "movies at " + name, api_key: serpApiKey });
+        let showTimes = await getJson({ q: "movies at " + name, api_key: `${process.env.SERP_API_KEY}` });
         //console.log(showTimes.showtimes);
         obj.showTimes = showTimes.showtimes;
         let movieNamesSet = new Set();
@@ -104,7 +104,7 @@ async function callSerpApi(query, location, resultKey) {
         location: location,
         hl: "en",
         gl: "us",
-        api_key: serpApiKey
+        api_key: `${process.env.SERP_API_KEY}`
     });
 
     return theatres[resultKey];

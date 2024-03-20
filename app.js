@@ -32,13 +32,6 @@ app.use("/js", express.static(path.join(__dirname, "views", "js")));
 
 // CUSTOM ROUTERS MIDDLEWARES
 app.use(theatreRouter);
-app.use(router);
-// GET ROUTERS 
-app.get('/', function(req, res, next) {
-  res.render("pages/index");
-});
-
-
 
 // RUN THE SERVER
 const PORT = process.env.PORT || 80;
