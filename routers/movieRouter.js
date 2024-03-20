@@ -48,9 +48,11 @@ router.get('/movie_details/:id', async function(req, res, next){
     let isNow = false
     for (let ele of now['data']['results']){
         if (ele['id'].toString() === movie_id.toString()){
+        
           isNow = true
         }
     }
+  console.log("Is Now playing", isNow, movie_id)
 
   res.render('pages/movie', {data: {t: title, o:overview,
                                     stat: status, rev :revenue,
