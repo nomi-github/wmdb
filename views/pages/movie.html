@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/layout.css" />
@@ -8,56 +9,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-   
-    <title>Movie</title>
-
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"  type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"
+        type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
-
+    <title>Movie</title>
 </head>
 <style>
-    body{
+    body {
         font-family: Arial, Helvetica, sans-serif;
         font-size: 14px;
     }
-    #container{
+    #container {
         width: 100%;
         height: 100%;
         position: absolute;
         top: 0px;
         height: 500px;
-        background: linear-gradient(to left, transparent,rgb(26,26,26));  
+        background: linear-gradient(to left, transparent, rgb(26, 26, 26));
         z-index: -1;
-        mask-image: linear-gradient(to left, transparent, black);  
+        mask-image: linear-gradient(to left, transparent, black);
     }
-    #poster_main{
-
+    #poster_main {
         opacity: 0.5;
-        /*width: 100%*/;
+        /*width: 100%*/
+        ;
         height: 500px;
         position: absolute;
         top: 0px;
-        right:600px;
+        right: 600px;
         z-index: -10;
         object-fit: cover;
-
     }
+
     #divider {
         position: absolute;
-        top:500px;
+        top: 500px;
         background-color: rgb(41, 40, 40);
         width: 100%;
         height: 140px;
         z-index: -10
-
     }
-    #playerdiv{
+
+    #playerdiv {
         width: 400px;
         height: 300px;
 
     }
-    #playerdiv img{
+
+    #playerdiv img {
         width: 200px;
         height: 300px;
         background-color: antiquewhite;
@@ -68,24 +68,28 @@
         z-index: -1;
 
     }
-    #playicon{
+
+    #playicon {
         position: absolute;
         left: 370px;
         top: 580px;
-        color: rgb(226,221,221);
+        color: rgb(226, 221, 221);
         font-size: 60px;
         z-index: -1
     }
-    #playicon:hover{
+
+    #playicon:hover {
         font-size: 62px;
-        color: white ;
+        color: white;
     }
-    #divider label{
+
+    #divider label {
         color: white;
         position: relative;
         top: 50px;
     }
-    #content{
+
+    #content {
         width: 945px;
         /*height: 500px;
         border: 1px solid white;*/
@@ -96,22 +100,25 @@
         z-index: -1;
         word-wrap: break;
     }
-    #content label{
+
+    #content label {
         width: 100%;
         height: fit-content;
     }
-    #displayer{
+
+    #displayer {
         margin-top: 0px;
         visibility: hidden;
-
     }
-    #youtube-video{
+
+    #youtube-video {
         position: absolute;
         left: 300px;
         top: 70px;
         z-index: 2000;
     }
-    #theaters{
+
+    #theaters {
         position: absolute;
         top: 1000px;
         color: white;
@@ -119,277 +126,222 @@
         left: 300px;
     }
 
-    #thumbnail{
-        width: 200px;
-        height:150px;
-        object-fit: cover;
-    }
-    #info{
+    #info {
         width: 100%;
         word-wrap: break;
     }
-    #info label{
+
+    #info label {
         font-size: 20px;
     }
-    #theater{
-        padding: 10px; 
-    }
 
-    #divider button{
+    #divider button {
         padding: 5px;
         position: absolute;
         left: 1172px;
         top: 50px;
         border-radius: 10px;
     }
-    #suggestions{
-        background-color: white;
-        color: black;
-        font-size: 20px;
-    }
-    .footer{
+
+    .footer {
         margin-top: 100%;
     }
-    .grid-items{
+
+    .grid-items {
         row-gap: 10px;
     }
+
     .movies-container {
-    position:relative;
+        position: relative;
+        top: 700px;
+        left: 300px;
+        flex: 1;
+        /* background-color: #001232; */
+        background-color: black;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        padding-top: 100px;
+    }
+    .movies-slider {
+        width: 945px;
+        overflow: hidden;
+        position: relative;
+    }
 
-    top: 700px;
-    left: 300px;
-    flex: 1;
-    /* background-color: #001232; */
-    background-color: black;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    padding-top: 100px;
-}
-  .movies-slider {
-    width: 945px;
-    overflow: hidden;
-    position: relative;
-  }
+    .slider-prev, .slider-next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 2rem;
+        color: white;
+        z-index: 900;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 0 0.5rem;
+    }
 
-  .slider-prev, .slider-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 2rem;
-    color: white;
-    z-index: 900;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 0 0.5rem;
-  }
-  .slider-prev { left: 0; }
-  .slider-next { right: 0; }
-  .slider-inner {
-    display: flex;
-    transition: transform 0.5s ease;
-  }
-  .movie-poster {
-    min-width: 18%;
-    background-color: #444;
-    height: 340px;
-    margin-right: 10px;
-    box-sizing: border-box;
-    border-radius: 20px;
-    cursor: pointer;
-    position: relative;
-  } 
+    .slider-prev {
+        left: 0;
+    }
+    .slider-next {
+        right: 0;
+    }
 
-  .movie-poster-img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    margin-right: 10px;
-    box-sizing: border-box;
-    border-radius: 20px;
-    z-index: -10;
-  }
+    .slider-inner {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+    .movie-poster {
+        min-width: 18%;
+        background-color: #444;
+        height: 340px;
+        margin-right: 10px;
+        box-sizing: border-box;
+        border-radius: 20px;
+        cursor: pointer;
+        position: relative;
+    }
 
-
-
+    .movie-poster-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        margin-right: 10px;
+        box-sizing: border-box;
+        border-radius: 20px;
+        z-index: -10;
+    }
 </style>
 <script>
-       function moveSlide(direction, sliderType) {
+    function moveSlide(direction, sliderType) {
         let sliderInnerSelector = '.slider-inner';
         if (sliderType === 'movies1') {
-          sliderInnerSelector = '.movies1-inner';
-        }else if(sliderType === 'movies2'){
-          sliderInnerSelector = '.movies2-inner';
-        }else if(sliderType === 'movies3'){
-          sliderInnerSelector = '.movies3-inner';
-        }else if(sliderType === 'movies4'){
-          sliderInnerSelector = '.movies4-inner';
-        }else{
-          sliderInnerSelector = '.movies5-inner';
+            sliderInnerSelector = '.movies1-inner';
+        } else if (sliderType === 'movies2') {
+            sliderInnerSelector = '.movies2-inner';
+        } else if (sliderType === 'movies3') {
+            sliderInnerSelector = '.movies3-inner';
+        } else if (sliderType === 'movies4') {
+            sliderInnerSelector = '.movies4-inner';
+        } else {
+            sliderInnerSelector = '.movies5-inner';
         }
-      
+
         const sliderInner = document.querySelector(sliderInnerSelector);
         const slides = sliderInner.querySelectorAll('.movie-poster');
         const slidesWidth = slides[0].offsetWidth + 10; // Assuming 10px is the margin-right
         let maxIndex = slides.length - 5; // Adjusting to ensure we don't slide past the end
-      
+
         if (!window["currentIndex_" + sliderType]) window["currentIndex_" + sliderType] = 0;
-      
         window["currentIndex_" + sliderType] += direction;
-      
         if (window["currentIndex_" + sliderType] < 0) {
-          window["currentIndex_" + sliderType] = 0; // Prevent sliding beyond the first poster
+            window["currentIndex_" + sliderType] = 0; // Prevent sliding beyond the first poster
         } else if (window["currentIndex_" + sliderType] > maxIndex) {
-          window["currentIndex_" + sliderType] = maxIndex; // Prevent sliding beyond the last poster
+            window["currentIndex_" + sliderType] = maxIndex; // Prevent sliding beyond the last poster
         }
-      
         const moveAmount = -(slidesWidth * window["currentIndex_" + sliderType]);
         sliderInner.style.transform = `translateX(${moveAmount}px)`;
-      }
-
+    }
     let trailer;
     let movie_id;
 
-    $(document).ready(function(){
+    $(document).ready(function () {
 
-    let value = $('#divider input').val()
-    console.log("This is hidden value"+value)
-
-
-    $('#locationInput').on('input', function() {
-    var input = $(this).val();
-    var suggestionsDiv = $('#suggestions');
-    suggestionsDiv.empty(); // Clear previous suggestions
-    
-    // Simulated list of suggested locations (replace with actual data)
-//    var locations = ["Fairfield, IA, USA", "New York, NY, USA", "Los Angeles,CA,USA", "Chicago,illinois,USA", "Houston,TX,USA", "Philadelphia,PA,USA", "Phoenix,AZ,USA", "San Antonio,TX,USA", "San Diego,CA,USA", "Dallas,TX,USA", "San Jose, CA,USA"];
-     var locations = ["New York", "Los Angeles", "Chicago", "Houston", "Philadelphia", "Phoenix", "San Antonio", "San Diego", "Dallas", "San Jose"];
-    
-    // Filter locations based on user input
-    var filteredLocations = locations.filter(function(location) {
-      return location.toLowerCase().includes(input.toLowerCase());
-    });
-    
-    // Display suggestions
-    filteredLocations.forEach(function(location) {
-      var suggestion = $('<div class="suggestion"></div>').text(location);
-      suggestion.on('click', function() {
-        $('#locationInput').val(location);
-        suggestionsDiv.empty(); // Clear suggestions after selection
-      });
-      suggestionsDiv.append(suggestion);
-    });
-  });
-
-  $('#locationInput').keypress(function(event) {
-    if (event.which === 13) { // 13 is the code for the "Enter" key
-      // Perform your desired action here, for example, submit the form
-      // In this example, we're just clearing the suggestions
-      //alert($(this).val())
-      let movie_id = $('#movie_id').val()
-      let location = $(this).val()
-
-      let encodedloc = encodeURIComponent(location)
-      
-
-      let url = "/movie_details/"+movie_id+"/"+encodedloc
-      alert(url)
-      window.location.href = url
-      
+     $(document).on('click', function (event) {
+            var iframe = $('#youtube-video');
+            var iframeRect = iframe[0].getBoundingClientRect();
+            if (
+                !$(event.target).is(iframe) &&
+                event.clientX < iframeRect.left || event.clientX > iframeRect.right ||
+                event.clientY < iframeRect.top || event.clientY > iframeRect.bottom
+            ) {
+                let videoUrl = trailer + '?&mute=1&enablejsapi=1';
+                $('#youtube-video').attr('src', videoUrl);
+                $('#displayer iframe').css('visibility', 'hidden');
+                console.log('Clicked outside of the iframe');
+            }
+        });
 
 
-
-    }
-  });
-
-
-    $('#divider button').on('click', function(){
-        let hg = $(this).attr('id')
+        let value = $('#divider input').val()
+        console.log("This is hidden value" + value)
         
-        console.log(hg)
-        window.location.href = hg;
-        
-
-    })
-    $('#playicon').on('click', function(){
-        trailer = $("#displayer iframe").attr('class')
-        let videoUrl = trailer+'?autoplay=1&mute=1&enablejsapi=1';
-        console.log("This is videoUrl", videoUrl)
-        $('#youtube-video').attr('src', videoUrl); 
-        $("#displayer iframe").css("visibility", "visible")
-
-    })
-
-        $("#container").on('click',function(){
-        let videoUrl = trailer+'?&mute=1&enableapi=1';
-        $('#youtube-video').attr('src',videoUrl);
-    
-            $('#displayer iframe').css('visibility', 'hidden');
+        $('#divider button').on('click', function () {
+            let hg = $(this).attr('id')
+            console.log(hg)
+            window.location.href = hg;
         })
-
-        $('#locationInput').mouseout(function(){
-            $('#suggestionsDiv').empty()
+        
+        $('#playicon').on('click', function () {
+            trailer = $("#displayer iframe").attr('class')
+            let videoUrl = trailer + '?autoplay=1&mute=1&enablejsapi=1';
+            console.log("This is videoUrl", videoUrl)
+            $('#youtube-video').attr('src', videoUrl);
+            $("#displayer iframe").css("visibility", "visible")
         })
     })
+</script>
 
-
-    </script>
 <body>
     <%- include('header.html'); %>
-    <div id="container">
-        <input id="movie_id" type="hidden" value='<%=data['mid'] %>'>
-    <img id="poster_main" src='<%= data['main'] %>'>
-    <div id="playerdiv">
-            <img src='<%= data['img']%>'>
-            <i id="playicon" class="fa far fa-play-circle"></i>
-        </div>
-        <div id="divider">
-            <input id= "hidden" type="hidden" value='<%= data['isPlaying'] %>' >
-            <button id= '<%= data['hg'] %>'>Book Ticket</button>
-            
-        </div>
-
-            <div id="displayer" >
-                <iframe id="youtube-video" class='<%= data['trail'] %>' width="1200" height="815" frameborder="0"  allowfullscreen></iframe>
+        <div id="container">
+            <input id="movie_id" type="hidden" value='<%=data[' mid'] %>'>
+            <img id="poster_main" src='<%= data['main'] %>'>
+            <div id="playerdiv">
+                <img src='<%= data['img']%>'>
+                <i id="playicon" class="fa far fa-play-circle"></i>
+            </div>
+            <div id="divider">
+                <input id="hidden" type="hidden" value='<%= data['isPlaying'] %>'>
+                <button id='<%= data['hg'] %>'>Book Ticket</button>
+            </div>
+            <div id="displayer">
+                <iframe id="youtube-video" class='<%= data['trail'] %>' width="1200" height="815" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;
+                    web-share" allowfullscreen></iframe>
             </div>
 
-        <div id="content" style=" display: grid; grid-template-columns: auto; justify-content: center;  gap:5px ;">
-            <label class="grid-items">Title: &nbsp;<%= data['t']%></label>
-            <label class="grid-items">Description: &nbsp; <%= data['o']%></label>
-            <label class="grid-items" for=""> Vote Average: &nbsp; <%= data['v1']%> </label>
-            <label class="grid-items" for="">Vote Count: &nbsp; <%= data['v2']%> </label>
-        </div>
+            <div id="content" style=" display: grid; grid-template-columns: auto; justify-content: center;  gap:5px ;">
+                <label class="grid-items">Title: &nbsp;<%= data['t']%></label>
+                <label class="grid-items">Description: &nbsp; <%= data['o']%></label>
+                <label class="grid-items" for=""> Vote Average: &nbsp; <%= data['v1']%> </label>
+                <label class="grid-items" for="">Vote Count: &nbsp; <%= data['v2']%> </label>
+            </div>
 
-        
-
-        <main class="movies-container">
-            <%  if( data['movies1'].length > 0) { %>
-            <h3 style="margin-top: 0px;color: #dba205;">Recommendations</h3>
-            <div class="movies-slider">
-              <div class="slider-prev" onclick="moveSlide(-5, 'movies1')">&#10094;</div>
-              <div class="slider-inner movies1-inner">
-                <% data['movies1'].forEach(movie => { %>
-                  <div class="movie-poster">
-                    <img class="movie-poster-img" onclick="goDetail('<%=movie.id%>')" src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
-                    <div class="movie-info">
-                      <h3><%= movie.title %></h3>
-                      <label>Rating: <%= (movie.vote_average).toFixed(1) %></label><br>
-                      <label>Release Date: <%= movie.release_date %></label>
+            <main class="movies-container">
+                <% if( data['movies1'].length> 0) { %>
+                    <h3 style="margin-top: 0px;color: #dba205;">Recommendations</h3>
+                    <div class="movies-slider">
+                        <div class="slider-prev" onclick="moveSlide(-5, 'movies1')">&#10094;</div>
+                        <div class="slider-inner movies1-inner">
+                            <% data['movies1'].forEach(movie=> { %>
+                                <div class="movie-poster">
+                                    <img class="movie-poster-img" onclick="goDetail('<%=movie.id%>')"
+                                        src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+                                        alt="<%= movie.title %>">
+                                    <div class="movie-info">
+                                        <h3>
+                                            <%= movie.title %>
+                                        </h3>
+                                        <label>Rating: <%= (movie.vote_average).toFixed(1) %></label><br>
+                                        <label>Release Date: <%= movie.release_date %></label>
+                                    </div>
+                                </div>
+                                <% }) %>
+                        </div>
+                        <div class="slider-next" onclick="moveSlide(5, 'movies1')">&#10095;</div>
                     </div>
-                  </div>
-                <% }) %>
-              </div>
-              <div class="slider-next" onclick="moveSlide(5, 'movies1')">&#10095;</div>
-            </div>
-            <% }else{ %>
-              <p style="margin-top: 0px;">No items were found that match your query.</p> 
-            <% } %>
-        </main>
+                    <% }else{ %>
+                        <p style="margin-top: 0px;">No items were found that match your query.</p>
+                        <% } %>
+            </main>
 
 
 
-    </div>
-    <%- include('footer.html'); %>
+        </div>
+        <%- include('footer.html'); %>
 </body>
+
 </html>
