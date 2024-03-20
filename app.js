@@ -5,7 +5,6 @@ const path = require("path");
 var cookieParser = require('cookie-parser');
 
 var cookieParser = require("cookie-parser");
-const { db } = require("./routers/mongodb");
 const router = require("./routers/router");
 const movierouter = require("./routers/movieRouter");
 const app = express();
