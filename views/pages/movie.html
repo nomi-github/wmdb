@@ -215,6 +215,10 @@
     }
 </style>
 <script>
+    function goDetail(movie_id){
+        let url = "/movie_details/"+movie_id;
+        window.location.href = url;
+      }
     function moveSlide(direction, sliderType) {
         let sliderInnerSelector = '.slider-inner';
         if (sliderType === 'movies1') {
@@ -306,6 +310,10 @@
             <div id="content" style=" display: grid; grid-template-columns: auto; justify-content: center;  gap:5px ;">
                 <label class="grid-items">Title: &nbsp;<%= data['t']%></label>
                 <label class="grid-items">Description: &nbsp; <%= data['o']%></label>
+                <label class="grid-items">Status: &nbsp; <%= data['stat']%></label>
+                <label class="grid-items">Revenue: &nbsp; $<%= data['rev']%></label>
+                <label class="grid-items">Budget: &nbsp; $<%= data['bud']%></label>
+                <label class="grid-items">Language: &nbsp; <%= data['language']%></label>
                 <label class="grid-items" for=""> Vote Average: &nbsp; <%= data['v1']%> </label>
                 <label class="grid-items" for="">Vote Count: &nbsp; <%= data['v2']%> </label>
             </div>
@@ -318,7 +326,7 @@
                         <div class="slider-inner movies1-inner">
                             <% data['movies1'].forEach(movie=> { %>
                                 <div class="movie-poster">
-                                    <img class="movie-poster-img" onclick="goDetail('<%=movie.id%>')"
+                                    <img class="movie-poster-img" onclick="goDetail('<%= movie.id%>')"
                                         src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
                                         alt="<%= movie.title %>">
                                     <div class="movie-info">
