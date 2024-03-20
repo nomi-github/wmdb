@@ -3,8 +3,9 @@ const axios = require("axios");
 const theatreRouter = express.Router();
 var path = require('path');
 const { count } = require('console');
+const { db } = require("./mongodb");
 
-theatreRouter.get("/theatres", function (req, res, next) {
+theatreRouter.get("/theaters", function (req, res, next) {
     let dates = getDateList();
     let today = new Date();
     if (!req.cookies.location) {
@@ -30,37 +31,44 @@ theatreRouter.post("/changeLocation", function (req, res, next) {
 let serpApiKey = "e6ae8922bede93a3c646ceefd0231588ffecdb8a8d556f3b063a100b8b4c8a91";
 const { getJson } = require("serpapi");
 const { json } = require('body-parser');
-theatreRouter.get("/getShowTimes", function (req, res, next) {
-   // let result = getNearByShowTimes(req.cookies.location);
-    getJson({
+
+theatreRouter.get("/getShowTimes", async function (req, res, next) {
+    // let result = getNearByShowTimes(req.cookies.location);
+    let theatres = await getJson({
         q: "theaters nearby",
         location: req.cookies.location,
         hl: "en",
         gl: "us",
         api_key: serpApiKey
-    }, (theatres) => {
-        try {
-            let localTheatres = theatres["showtimes"];//theatres["local_results"];
-            res.send(localTheatres);
-          /*  let result = [];
-            for (let ele of localTheatres.places) {
-                let obj = { title: ele.title, addr: ele.address, thumbnail: ele.thumbnail };
-                getJson({ q: "movies at " + ele.title, api_key: serpApiKey }, (showTimes) => {
-                    obj.showTimes = showTimes.showtimes;
-                    console.log(obj.showTimes);
-                    result.push(obj); // Push inside the callback to ensure it's executed after showTimes is assigned
-                    if (result.length === localTheatres.places.length) {
-                        res.send(result);
-                        //resolve(result); // Resolve after all showTimes are assigned
-                    }
-                });                            
-            }*/
-           
-        } catch (error) {
-            reject(error);
-        }
     });
+
+    let localTheatres = theatres["local_results"];
+    let result = [];
+    for (let ele of localTheatres.places) {
+        let obj = { title: ele.title, addr: ele.address, thumbnail: ele.thumbnail };
+        let showTimes = await getJson({ q: "movies at " + ele.title, api_key: serpApiKey });
+        obj.showTimes = showTimes.showtimes;
+        console.log(obj.showTimes);
+        result.push(obj); // Push inside the callback to ensure it's executed after showTimes is assigned
+    }
+    res.send(result);
 })
+
+
+// const { db } = require("./mongodb");
+// theatreRouter.get('/latestMovie', async (req, res) => {
+//     const username = 'john_doe';
+//     const movieId = '654321';
+
+//     try {
+//         const result = await db.addMovieToUser(username, movieId);
+//         res.status(200).json({ success: true, message: 'Latest movie saved/updated successfully' });
+
+//     } catch (error) {
+//         console.error('Error saving/updating latest movie:', error);
+//         res.status(500).json({ success: false, message: 'Internal server error' });
+//     }
+// });
 
 function getDateList() {
     const datesArray = [];
