@@ -2,63 +2,28 @@
   <head>
     <title>Sample</title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="css/layout.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/layout.css" />
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script>
-      let images = [
-        { small: "small-wonka.jpg", big: "wonka.jpg" },
-        { small: "small-poor.jpg", big: "poor.jpeg" },
-        { small: "small-kungfu.jpg", big: "kungfu.avif" },
-        { small: "small-dune.jpeg", big: "dune.jpeg" },
-        { small: "small-damsel.jpeg", big: "damsel.jpeg" },
-        { small: "small-wonka.jpg", big: "wonka.jpg" },
-        { small: "small-poor.jpg", big: "poor.jpeg" },
-        { small: "small-kungfu.jpg", big: "kungfu.avif" },
-        { small: "small-dune.jpeg", big: "dune.jpeg" },
-        { small: "small-damsel.jpeg", big: "damsel.jpeg" },
-      ];
-      let currentIndex = 0;
-      let sst = 0;
-      function transformSlide() {
-        for (let i = 0; i < 10; i++) {
-          if (i == 0) $(".slider").append(`<div class="img "> <img src="/images/${images[i].small}"/></div>`);
-          else if (i > 0 && i < 3) $(".slider").append(`<div class="img "> <img src="/images/${images[i].small}"/></div>`);
-          else if (i > 3) $(".slider").append(`<div class="img "> <img src="/images/${images[i].small}"/></div>`);
-        }
-      }
-      function changeSlide(dest) {
-        console.log(dest);
-        let dist = $(".slick-track .img:first-child").outerWidth();
-        if (dest == "left") {
-          if (currentIndex == 0) currentIndex = images.length - 1;
-          else (currentIndex - 1) % images.length;
-          $(".slick-track").children().eq(1).removeClass("rotateLeft").addClass("active");
-          $(".slslick-trackider").children().eq(2).addClass("rotateRight").removeClass("active");
-        } else if (dest == "right") {
-          currentIndex = (currentIndex + 1) % images.length;
-
-          $(".slick-track").children().eq(2).addClass("rotateLeft").removeClass("active");
-          $(".slick-track").children().eq(3).removeClass("rotateRight").addClass("active");
-        }
-        $(".top-container").css("background-image", "url(/images/" + images[currentIndex].big + ")");
-      }
+      const nowPlaying = <%- JSON.stringify(nowPlaying)  %>;
+      const genres = <%- JSON.stringify(genres) %>;
+      const recommend =  <%- JSON.stringify(recommend) %>;
+      console.log('recommend' ,recommend)
 
       $(document).ready(function () {
-        $(".movies .card-outer").mouseover(function () {
-          // $(".movies .card-inner").css("width", "100%");
-        });
-        transformSlide();
+        // transformSlide();
         $(".center").slick({
           centerMode: true,
           centerPadding: "10px",
           slidesToShow: 5,
           responsive: [
             {
-              breakpoint: 768,
+              breakpoint: 500,
               settings: {
                 arrows: false,
                 centerMode: true,
@@ -87,6 +52,19 @@
             '<path stroke-linecap="round" stroke-linejoin="round" d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />' +
             " </svg>"
         );
+
+
+
+        $('.top-container').css({'background-image':'url(https://image.tmdb.org/t/p/original/'+ nowPlaying[0].backdrop_path+')'});
+        $('.top-content .title').html(nowPlaying[0].original_title);
+        $('.top-content .captions label:first-child').html(nowPlaying[0].release_date.split('-')[0])
+        $('.top-content .desc span').html(nowPlaying[0].overview);
+
+        let strGenre = '';
+        for(let g of nowPlaying[0].genre_ids){
+          if(genres[g] != undefined) strGenre += genres[g].name +', ';
+        }
+        $('.top-content .genre span').html(strGenre.substring(0, strGenre.length - 2));
         $(window).on("scroll", function () {
           if ($(window).scrollTop() > 50) {
             $(".header").addClass("active");
@@ -96,8 +74,7 @@
           }
         });
       });
-      $(".slick-prev").on("click", changeSlide("left"));
-      $(".slick-next").on("click", changeSlide("next"));
+
       function openSearch() {
         $(".search-input input").addClass("open");
       }
@@ -108,7 +85,33 @@
         console.log("edge was hit");
       });
 
-      $(".slick-slider").on("click", ".slick-slide", changeSlide("left"));
+      function changeSlide(){
+        var nowPlaying = <%- JSON.stringify(nowPlaying)  %>;
+          let index = $('.slick-slide.slick-center').attr('data-slick-index');
+          if(index<0){
+            index =  nowPlaying.length+index;
+          }
+          $('.top-container').css({'background-image':'url(https://image.tmdb.org/t/p/original/'+ nowPlaying[index].backdrop_path+')'});
+          $('.top-content .title').html(nowPlaying[index].original_title);
+          $('.top-content .captions label:first-child').html(nowPlaying[index].release_date.split('-')[0])
+          $('.top-content .desc span').html(nowPlaying[index].overview);
+
+
+        let strGenre = '';
+        for(let g of nowPlaying[0].genre_ids){
+          if(genres[g] != undefined) strGenre += genres[g].name +', ';
+        }
+        $('.top-content .genre span').html(strGenre.substring(0, strGenre.length - 2));
+
+      }
+      setTimeout(() => {
+        $("button.slick-next.slick-arrow").click(() => {
+          changeSlide()
+        });
+        $("button.slick-prev.slick-arrow").click(() => {
+          changeSlide()
+        });
+      }, 1000);
     </script>
   </head>
   <body>
@@ -121,16 +124,15 @@
               <div class="title">Damsel</div>
               <div class="captions">
                 <label>2022</label>
-                <label>185 min</label>
                 <label>English</label>
               </div>
             </div>
             <div>
-              <div class="desc"><label>Genre:</label>Action, Fantasy, Superhereos</div>
+              <div class="genre"><label>Genre:</label><span>Action, Fantasy, Superhereos</span></div>
               <div class="desc">
-                <label>Contents:</label> A young woman's marriage to a charming prince turns into a fierce fight for survival when she's offered up as a sacrifice to a fire-breathing dragon.
+                <label>Contents:</label>
+                <span>A young woman's marriage to a charming prince turns into a fierce fight for survival when she's offered up as a sacrifice to a fire-breathing dragon.</span>
               </div>
-              <div class="desc"><label>Starring:</label>Millie Brown,</div>
             </div>
           </div>
           <div style="width: 50%; height: 100%; display: flex; align-items: center">
@@ -144,51 +146,35 @@
         </div>
       </div>
       <div class="slider-outer">
-        <div class="slider center"></div>
+        <div class="slider center">
+          <% for(let p of nowPlaying){%>
+          <div class="img"><img loading="lazy" src="https://image.tmdb.org/t/p/original/<%=p.poster_path %>" alt="popular" /></div>
+          <% } %>
+        </div>
       </div>
       <div class="movies">
         <div class="inner">
           <p class="title">Popular</p>
           <div class="card-container">
-            <div class="card-outer">
+            <% for(let p of popular.slice(0,6)){%>
+            <div class="card-outer rec" style="background-image: url(https://image.tmdb.org/t/p/original/<%=p.poster_path %>)">
               <div class="card-inner">
-                <p>Dune</p>
+                <a><%=p.original_title %></a>
               </div>
             </div>
-            <div class="card-outer">
-              <div class="card-inner"><p>Dune</p></div>
-            </div>
-            <div class="card-outer">
-              <div class="card-inner"><p>Dune</p></div>
-            </div>
-            <div class="card-outer">
-              <div class="card-inner"><p>Dune</p></div>
-            </div>
-            <div class="card-outer">
-              <div class="card-inner"><p>Dune</p></div>
-            </div>
+            <% } %>
           </div>
         </div>
         <div class="inner">
           <p class="title">Recommendations</p>
           <div class="card-container">
-            <div class="card-outer rec">
+            <% for(let r of recommend.slice(0,6)){%>
+            <div class="card-outer rec" style="background-image: url(https://image.tmdb.org/t/p/original/<%=r.poster_path %>)">
               <div class="card-inner">
-                <p>Dune</p>
+                <a href="/movieDetails/<%= r.id %>"><%=r.original_title %></a>
               </div>
             </div>
-            <div class="card-outer rec">
-              <div class="card-inner"><p>Wonka</p></div>
-            </div>
-            <div class="card-outer rec">
-              <div class="card-inner"><p>Dune</p></div>
-            </div>
-            <div class="card-outer rec">
-              <div class="card-inner"><p>Dune</p></div>
-            </div>
-            <div class="card-outer rec">
-              <div class="card-inner"><p>Dune</p></div>
-            </div>
+            <% } %>
           </div>
         </div>
       </div>

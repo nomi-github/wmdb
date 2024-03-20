@@ -6,6 +6,7 @@ var cookieParser = require("cookie-parser");
 const { db } = require("./routers/mongodb");
 const router = require("./routers/router");
 const mvlist_router = require("./routers/movielist");
+const homeRouter = require("./routers/homeRouter");
 const app = express();
 
 app.use(cookieParser());
@@ -38,3 +39,4 @@ app.listen(PORT, () => {
 
 app.use(router);
 app.use(mvlist_router);
+app.use(homeRouter);
