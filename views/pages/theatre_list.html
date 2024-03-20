@@ -1,5 +1,6 @@
 <html lang="en">
-  <head>
+
+<head>
     <title>Sample</title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="css/layout.css" />
@@ -8,35 +9,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    
+
     <script src="js/theatres.js"></script>
     <script>
         let showTimes = [];
         let selectedDate;
-        $(document).ready(function () {   
-            changeSelectedDate($('.date:first'));         
+        $(document).ready(function () {
+            updateShowTimes("all");
+            changeSelectedDate($('.date:first'));
             console.log("selectedDate", selectedDate);
         });
 
-        function updateShowTimes() {
+        function updateShowTimes(selectedTheaters) {
             console.log('updatingShowTimes');
             $.ajax({
-                url: '/getShowTimes', // Server-side endpoint to fetch showTimes
+                url: '/getShowTimes/' + selectedTheaters, // Server-side endpoint to fetch showTimes
                 type: 'GET',
                 dataType: 'json',
-                success: function (response) {                    
+                success: function (response) {
                     if (!response) {
-                        $('#theatresList').html('Sorry we could not find any showtimes for selected date');
+                        $('#showTimeList').html('Sorry we could not find any showtimes for selected date');
                     } else {
-                        //showTimes = response.showtimes;
-                       //console.log(response, JSON.stringify(response));
-                        for (let ele of response) {
-                           // console.log(JSON.stringify(ele), createPlayTimeDiv(ele, selectedDate));
-                            const html = createPlayTimeDiv(ele, selectedDate);  
-                            console.log(html);
-                            $('#theatresList').append(html); 
-                        }
-                    }                    
+                        console.log("updatingShowTimes", response);
+                        
+                        showTimes = response;
+                        showResults();
+                    }
                 },
                 error: function (xhr, status, error) {
                     console.error('Error fetching showtimes:', error);
@@ -45,52 +43,120 @@
             });
         }
 
+        function showResults() {
+            $('#showTimeList').html("");
+            console.log("showing results: ", selectedDate, JSON.stringify(showTimes));
+            if (showTimes) {
+                for (let ele of showTimes) {
+                    console.log(ele);
+                    const html = createPlayTimeDiv(ele, selectedDate);
+                    //console.log(html);
+                    $('#showTimeList').append(html);
+                }
+            }
+        }
+
         function changeSelectedDate(self) {
             console.log('datechange: ' + $(self).attr("value"));
-            $('div[class="date flex-column date-selected"]').removeClass('date-selected');            
+            $('div[class="date flex-column date-selected"]').removeClass('date-selected');
             $(self).addClass('date-selected');
             selectedDate = $(self).attr("value");
-            updateShowTimes();
+            showResults();//updateShowTimes();
         }
-      
+
+        function selectTheater(self) {
+            updateShowTimes($(self).attr("value"));
+        }
+
     </script>
-  </head>
-  <body>
+</head>
+
+<body>
     <%- include('header.html'); %>
-    <div id="theatreContent" class="flex-column gap_10">
-        <div id="theatresHeader">
-            <label for="">Movie Theaters + Showtimes</label>
-            <label for="location" id="selectedLocation">NEAR <%=location%></label>
-        </div>
-        <div id="changeLocation" class="padding_20">
-            Enter City, State and Country 
-            <button onclick="showLocationChange()" class="btn">
-                <img src="/images/map.png" width="30" height="30" alt="submit" />&nbsp;<%=location%>
-            </button>   
-            <div id="locationChangeDiv" style="visibility: hidden;">
-                <div onclick="closeLocationChangeDiv()" class="closeButton">X</div>
-                <form method="post" action="/changeLocation" id="changeLocationForm">
-                    <input type="text" placeholder="Enter City, State and Country" ondragenter="changeLocation()" name="newLocation">
-                    <button onclick="setToCurrentLocation()" class="btn">
-                        <img src="/images/location.png" width="30" height="30" alt="submit" />&nbsp;Set to current locaiton
-                    </button>
-                </form>
-            </div>         
-        </div>
-       
-        <div id="dateList">
-            <%for (let d of dates) { %>
-                <div class="date flex-column" onclick="changeSelectedDate(this)" value="<%=d.dayOfMonth%> <%=d.month%>">
-                    <div><%=d.dayOfWeek%></div>
-                    <div><%=d.month%></div>
-                    <div><%=d.dayOfMonth%></div>
+        <div id="theatreContent" class="flex-column gap_10">
+            <div id="theatresHeader">
+                <label for="">Movie Theaters + Showtimes</label>
+                <label for="location" id="selectedLocation">NEAR <%=location%></label>
+            </div>
+            <div class="borderedDiv">
+                Enter City, State and Country
+                <button onclick="showLocationChange()" class="btn">
+                    <img src="/images/map.png" width="30" height="30" alt="submit" />&nbsp;<%=location%>
+                </button>
+                <div id="locationChangeDiv" style="visibility: hidden;">
+                    <div onclick="closeLocationChangeDiv()" class="closeButton">X</div>
+                    <form method="post" action="/changeLocation" id="changeLocationForm">
+                        <input type="text" placeholder="Enter City, State and Country" ondragenter="changeLocation()"
+                            name="newLocation">
+                        <button onclick="setToCurrentLocation()" class="btn">
+                            <img src="/images/location.png" width="30" height="30" alt="submit" />&nbsp;Set to current
+                            locaiton
+                        </button>
+                    </form>
                 </div>
-            <%}%>
+            </div>
+
+            <div id="dateList">
+                <%for (let d of dates) { %>
+                    <div class="date flex-column" onclick="changeSelectedDate(this)"
+                        value="<%=d.month%> <%=d.dayOfMonth%>">
+                        <div>
+                            <%=d.dayOfWeek%>
+                        </div>
+                        <div>
+                            <%=d.month%>
+                        </div>
+                        <div>
+                            <%=d.dayOfMonth%>
+                        </div>
+                    </div>
+                    <%}%>
+            </div>
+            <div class="topBorderedDiv">Nearby Theaters: </div>
+            <div id="theatresList">
+                <%for (let t of localTheatres) { %>
+                    <!-- <div class="card-outer"> -->
+                    <!-- <div class="card-inner">
+                            <%=t.type%>
+                        </div> -->
+                    <div class="flex-transforming theaterDiv" onclick="selectTheater(this)" value="<%=t.title%>">
+                        <img src='<%=t.thumbnail%>'></img>
+                        <div class="flex-column">
+                            <h3>
+                                <%=t.title%>
+                            </h3>
+                            <div style="color:rgb(94, 94, 94); font-size: 14px;">
+                                <span>
+                                    <%=t.rating%>
+                                </span>
+                                <%for (let rating=1; rating<=5; rating++) { let ratingClass="" ; if (rating<=t.rating) {
+                                    console.log(rating, t.rating); ratingClass="ratingClass" ; } %>
+                                    <span class="fa fa-star <%=ratingClass%>"></span>
+                                    <%}%>
+                                        <span>
+                                            <%=t.reviews_original%>
+                                        </span>
+                            </div>
+
+                            <span style="color:lightgray">
+                                <%=t.address%>
+                            </span>
+                            <h4>
+                                <% let replacedString=t.description? t.description.replace(/^"|"$/g, '' ):'';%>
+                                    <%=replacedString%>
+                            </h4>
+                        </div>
+
+                    </div>
+                    <!-- </div> -->
+                    <%}%>
+            </div>
+
+            <div id="showTimeList">
+
+            </div>
         </div>
-        <div id="theatresList">
-         
-        </div>
-    </div>
-    <%- include('footer.html'); %>
-  </body>
+        <%- include('footer.html'); %>
+</body>
+
 </html>

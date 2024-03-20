@@ -4,27 +4,48 @@ const theatreRouter = express.Router();
 var path = require('path');
 const { count } = require('console');
 const { db } = require("./mongodb");
+require('dotenv').config();
 
-theatreRouter.get("/theaters", function (req, res, next) {
+theatreRouter.get("/theaters", async function (req, res, next) {
     let dates = getDateList();
     let today = new Date();
-    if (!req.cookies.location) {
-        console.log('getting the location');
-        getCurrentLocation().then(location => {
-            console.log("location: " + location);
-            res.cookie("location", location);
-            res.render("pages/theatre_list", { dates: dates, location: location });
-        })
-    } else {
-        console.log("location: " + req.cookies.location);
-        res.render("pages/theatre_list", { dates: dates, location: req.cookies.location });
+    let location = req.cookies.location;
+
+    if (!location) {        
+        location = getCurrentLocation();
+        console.log('getting the location', location);
+        res.cookie("location", location);
     }
+    let localTheatres = req.cookies.localTheatres;
+    console.log('cookies', req.cookies.localTheatres);
+    if (!localTheatres) {
+        let result = await callSerpApi("theaters nearby", location, "local_results");
+        //console.log('serpApiresult', result);
+        localTheatres = result.places;
+        console.log('localTheatres', localTheatres);
+    }
+
+    res.cookie("localTheaterNames", getTheaterNames(localTheatres));
+    res.cookie("localTheatres", localTheatres);
+    res.render("pages/theatre_list", { dates: dates, location: location, localTheatres: localTheatres });
 })
+
+function getTheaterNames(places) {
+    let result = [];
+    if (Array.isArray(places) && places) {
+        for (let p of places) {
+            result.push(p.title);
+        }
+    }
+    return result;
+}
 
 theatreRouter.post("/changeLocation", function (req, res, next) {
     let newLocation = req.body.newLocation;
     console.log("post theatres", newLocation);
     res.cookie("location", newLocation);
+    res.clearCookie('localTheatres', { path: '/' });
+    res.clearCookie('localTheaterNames', { path: '/' });
     res.redirect("back");
 })
 
@@ -32,27 +53,71 @@ let serpApiKey = "e6ae8922bede93a3c646ceefd0231588ffecdb8a8d556f3b063a100b8b4c8a
 const { getJson } = require("serpapi");
 const { json } = require('body-parser');
 
-theatreRouter.get("/getShowTimes", async function (req, res, next) {
-    // let result = getNearByShowTimes(req.cookies.location);
+theatreRouter.get("/getShowTimes/:selectedTheaterName", async function (req, res, next) {
+    let selectedTheaterName = req.params.selectedTheaterName;
+    console.log('selectedTheaterNames', selectedTheaterName);
+    let result = [];
+    let localTheaterNames = selectedTheaterName=="all" ? req.cookies.localTheaterNames: [selectedTheaterName];
+
+    for (let name of localTheaterNames) {
+        let obj = { theaterName: name };
+        let showTimes = await getJson({ q: "movies at " + name, api_key: serpApiKey });
+        //console.log(showTimes.showtimes);
+        obj.showTimes = showTimes.showtimes;
+        let movieNamesSet = new Set();
+        if (obj.showTimes) {
+            iterateOverMovies(obj, async function (movie) {
+                movieNamesSet.add(movie.name);
+            });
+            console.log('movieNames', movieNamesSet);
+            const movieMap = await db.getMovieDetailsByName(Array.from(movieNamesSet));
+            iterateOverMovies(obj, async function (movie) {
+                movie.movieDetail = movieMap[movie.name];
+            });
+        }
+        result.push(obj);
+    }
+    console.log(result);
+    res.send(result);
+})
+
+async function iterateOverMovies(obj, callback) {
+    for (let date of obj.showTimes) {
+        for (movie of date.movies) {
+            if (movie.name) {
+                callback(movie);
+            }
+        }
+    }
+}
+
+
+
+async function callSerpApi(query, location, resultKey) {
     let theatres = await getJson({
         q: "theaters nearby",
-        location: req.cookies.location,
+        location: location,
         hl: "en",
         gl: "us",
         api_key: serpApiKey
     });
 
-    let localTheatres = theatres["local_results"];
-    let result = [];
-    for (let ele of localTheatres.places) {
-        let obj = { title: ele.title, addr: ele.address, thumbnail: ele.thumbnail };
-        let showTimes = await getJson({ q: "movies at " + ele.title, api_key: serpApiKey });
-        obj.showTimes = showTimes.showtimes;
-        console.log(obj.showTimes);
-        result.push(obj); // Push inside the callback to ensure it's executed after showTimes is assigned
-    }
-    res.send(result);
-})
+    return theatres[resultKey];
+}
+
+// async function getMovieDetail(movieName) {
+//     try {
+//         const formattedMovieName = movieName.replace(/\s+/g, '+'); // Replace spaces with '+'
+//         console.log('formatted movieName', formattedMovieName);
+//         const response = await axios.get(`https://api.themoviedb.org/3/search/movie?include_adult=false&page=1&language=en-US&api_key=${process.env.API_KEY}&query=${formattedMovieName}`);
+//         //console.log('search result: ' + response);
+//         return response.results[0];
+//     } catch (error) {
+//         //console.error('Error fetching movie details:', error);
+//         throw error;
+//     }
+// }
+
 
 
 // const { db } = require("./mongodb");
@@ -94,24 +159,18 @@ function getDateInfo(date) {
     return dateInfo = {
         dayOfMonth: (dayOfMonth < 10) ? '0' + dayOfMonth : dayOfMonth,
         dayOfWeek: dayAbbreviations[date.getDay()],
-        month: formattedDate.split(' ')[0]
+        month: (formattedDate.split(' ')[0]).substring(0, 3)
     };
 }
 
 
-function getCurrentLocation() {
-    return axios.get('https://ipinfo.io/json')
-        .then(response => {
-            const { loc, city, country, postal, region } = response.data;
-            // const [latitude, longitude] = loc.split(',');
-            result = city + ", " + region + ", " + (country == 'US' ? 'United States' : country);
-            console.log("//getCurrentLocation", result);
-            return result;
-        })
-        .catch(error => {
-            console.error('Error fetching current location:', error);
-            return '';
-        });
+async function getCurrentLocation() {
+    let response = await axios.get('https://ipinfo.io/json');
+    const { loc, city, country, postal, region } = response.data;
+    // const [latitude, longitude] = loc.split(',');
+    let result = city + ", " + region + ", " + (country == 'US' ? 'United States' : country);
+    console.log("//getCurrentLocation", result);
+    return result;
 }
 
 module.exports = { theatreRouter, getCurrentLocation };
