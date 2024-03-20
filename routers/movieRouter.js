@@ -68,6 +68,6 @@ router.get('/movie_details/:id', async function(req, res, next){
   console.error('Error fetching data from TMDB:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
  }
-  })
+})
 
 module.exports = router; 

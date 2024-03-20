@@ -252,8 +252,9 @@
 </style>
 <script>
     function findTheaters(mid){
-        alert(mid)
-        window.location.href = "/theaters"
+        path = "/theaters?movieId="+mid;
+        alert(path)
+        window.location.href = path
     }
     function goDetail(movie_id){
         let url = "/movie_details/"+movie_id;
