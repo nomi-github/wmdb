@@ -11,10 +11,7 @@ const options = {
 const router = express.Router(options);
 router.get('/movie_details/:id', async function(req, res, next){
   let movie_id = req.params.id;
-  let mids1 = req.cookies.mids;
-  mids1.id.push(movie_id)
-  
-  res.cookie("mids", mids1)
+  res.cookie("latestMovie", movie_id);
   //res.cookie("mids", req.cookies.mids['id'].push(movie_id))
   try{
   let movie = await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}?language=en-US&api_key=${process.env.API_KEY}&page=1`);
