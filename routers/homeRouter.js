@@ -43,12 +43,6 @@ homeRouter.get("/", async function (req, res, next) {
     isLogged: req.cookies.isLogged,
     genres: genreRes.data.genres,
   });
-
-  // response.nowPlaying = await homeHelper.nowPlaying(1);
-  // response.genres = await homeHelper.genres();
-  // response.recommend = await homeHelper.recommend(1);
-  // await console.log(response);
-  // await res.render("pages/index", { data: response });
 });
 
 homeRouter.get("/search", async function (req, res, next) {
@@ -60,6 +54,13 @@ homeRouter.get("/search", async function (req, res, next) {
   }
   // res.send(searchRes.data.results);
   await res.render("pages/search", { results: searchRes.data.results, name: req.query.name });
+});
+
+homeRouter.get("/login", function (req, res) {
+  res.render("pages/loginCustom");
+});
+homeRouter.get("/register", function (req, res) {
+  res.render("pages/registerCustom");
 });
 
 module.exports = homeRouter;
