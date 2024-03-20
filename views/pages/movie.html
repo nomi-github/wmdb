@@ -2,48 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Document</title>
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+   
+    <title>Movie</title>
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"  type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
 
-    <script>
-
-    </script>
 </head>
 <style>
     body{
-        background-color: rgb(26, 26, 26);
-    }
-    .header{
-        z-index: 100;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
     }
     #container{
-        width: 100%;
-        position: absolute;
-        top: 0px;
-        height: 600px;
-        background: linear-gradient(to left, transparent,rgb(26,26,26)); /* Change 'white' to your desired background color */
-        z-index: -9;
-        mask-image: linear-gradient(to left, transparent, black); /* Adjust 'black' to match the darkest color in your image */
-    }
-    #poster_main{
-
-        opacity: 0.5;
         width: 100%;
         height: 100%;
         position: absolute;
         top: 0px;
+        height: 500px;
+        background: linear-gradient(to left, transparent,rgb(26,26,26));  
+        z-index: -1;
+        mask-image: linear-gradient(to left, transparent, black);  
+    }
+    #poster_main{
+
+        opacity: 0.5;
+        /*width: 100%*/;
+        height: 500px;
+        position: absolute;
+        top: 0px;
+        right:600px;
         z-index: -10;
-   /*     object-fit: contain;*/
+        object-fit: cover;
 
     }
     #divider {
         position: absolute;
-        top:600px;
+        top:500px;
         background-color: rgb(41, 40, 40);
         width: 100%;
         height: 140px;
@@ -62,7 +64,7 @@
         object-fit: cover;
         position: absolute;
         left: 300px;
-        top: 450px;
+        top: 440px;
         z-index: -1;
 
     }
@@ -85,6 +87,7 @@
     }
     #content{
         width: 945px;
+        /*height: 500px;*/
         border: 1px solid white;
         position: absolute;
         left: 300px;
@@ -92,6 +95,10 @@
         color: white;
         z-index: -1;
         word-wrap: break;
+    }
+    #content label{
+        width: 100%;
+        height: fit-content;
     }
     #displayer{
         margin-top: 0px;
@@ -102,7 +109,7 @@
         position: absolute;
         left: 300px;
         top: 70px;
-        z-index: 10;
+        z-index: 2000;
     }
     #theaters{
         position: absolute;
@@ -139,6 +146,12 @@
         background-color: white;
         color: black;
         font-size: 20px;
+    }
+    .footer{
+        margin-top: 100%;
+    }
+    .grid-items{
+        row-gap: 10px;
     }
 
 
@@ -233,7 +246,7 @@
 
     </script>
 <body>
-    <%- include('header.html') %>
+    <%- include('header.html'); %>
     <div id="container">
         <input id="movie_id" type="hidden" value='<%=data['mid'] %>'>
     <img id="poster_main" src='<%= data['main'] %>'>
@@ -251,34 +264,13 @@
                 <iframe id="youtube-video" class='<%= data['trail'] %>' width="1200" height="815" frameborder="0"  allowfullscreen></iframe>
             </div>
 
-        <div id="content" style=" font-size: 20px; display: grid; grid-template-columns: auto; gap:10px; justify-content: center;">
-            <label>Title: &nbsp;<%= data['t']%></label>
-            <label>Description: &nbsp; <%= data['o']%></label>
-            <label for=""> Vote Average: &nbsp; <%= data['v1']%> </label>
-            <label for="">Vote Count: &nbsp; <%= data['v2']%> </label>
-        </div>
-
-        <div id="theaters" >
-            <div><label>Theaters</label> in <label ><%= data['location']%> </label>
-                <input type="text" id="locationInput" name="locationInput" placeholder="Type your location..." autocomplete="off">
-                <div id="suggestions"></div>
-                
-            </div>
-            <% for(let ele of data['theaters']) {%>
-                <div id="theaterbox" style="display: flex; gap:10px; border: 1px solid white; padding: 10px;">
-                    <div id ="theater" ><img id="thumbnail" src='<%= ele['thumbnail']%>'> </div>
-                    <div id="info" style="display: grid; grid-template-columns: auto; gap:10px">
-                        <label>Theater: <%= ele['title']%> </label>
-                        <label>Rating: <%= ele['rating']%></label>
-                        <label>Address: <%= ele['address']%></label>
-                        <label>Description:<%= ele['description'] %></label>
-                    </div>
-                    </div>
-                    <br>
-                <%}%>
-            </div>
+        <div id="content" style=" display: grid; grid-template-columns: auto; justify-content: center;  gap:5px ;">
+            <label class="grid-items">Title: &nbsp;<%= data['t']%></label>
+            <label class="grid-items">Description: &nbsp; <%= data['o']%></label>
+            <label class="grid-items" for=""> Vote Average: &nbsp; <%= data['v1']%> </label>
+            <label class="grid-items" for="">Vote Count: &nbsp; <%= data['v2']%> </label>
         </div>
     </div>
-    <%- include('footer.html') %>
+    <%- include('footer.html'); %>
 </body>
 </html>
