@@ -1,38 +1,404 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script>
-
-    //const url = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1';
-    const url = 'https://api.themoviedb.org/3/movie/944401/recommendations?language=en-US&page=1';
-    const options = {
-    method: 'GET',
-    headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzN2MzNTc5ODE0Y2FmZGNjMWI4MjEyZmZjMzQ5OTNmZiIsInN1YiI6IjY1ZjVmNWY5ZDhmNDRlMDE2MzRlZWQ1NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xqxXb1-nAaRKKayR2IQSOAkjn7_21BosjYG9cUHMhYE'
-    }
-    };
-
-    $(document).ready(function() {
-        fetch(url, options)
-    .then(res => res.json())
-    .then(json => {
-        console.log(json);
-       // let result = JSON.parse(json);
-     
-        $("div").html(JSON.stringify(json));
-
-    })
-    .catch(err => console.error('error:' + err));
-    })
-   
-    </script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"
+        type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <title>Movie</title>
 </head>
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+    }
+    #container {
+        
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        height: 500px;
+        background: linear-gradient(to left, transparent, rgb(26, 26, 26));
+        z-index: -1;
+        mask-image: linear-gradient(to left, transparent, black);
+    }
+    #postercont{
+
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        height: 500px;
+        background: linear-gradient(to left, transparent, rgb(26, 26, 26));
+        z-index: -1;
+        mask-image: linear-gradient(to left, transparent, black);
+
+    }
+    #poster_main {
+        border: 1px solid rgba(0, 0, 0, 0.0);
+        opacity: 0.4;
+        /*width: 100%*/
+        ;
+        height: 500px;
+        position: absolute;
+        top: 0px;
+        right: 600px;
+        z-index: -10;
+        object-fit: cover;
+    }
+
+    #divider  {
+        opacity: 1;
+        position: absolute;
+        top: 500px;
+        background-color: rgb(41, 40, 40);
+        width: 100%;
+        height: 140px;
+        z-index: -10;
+        /*background: linear-gradient(to left, transparent, rgb(26, 26, 26));
+        mask-image: linear-gradient(to right, transparent, black);*/
+
+        background: linear-gradient(to top, transparent, rgb(26, 26, 26));
+        mask-image: linear-gradient(to top, transparent, black);
+
+    }
+
+    #playerdiv {
+        width: 400px;
+        height: 300px;
+
+    }
+
+    #playerdiv img {
+        width: 200px;
+        height: 300px;
+        background-color: antiquewhite;
+        object-fit: cover;
+        position: absolute;
+        left: 300px;
+        top: 440px;
+        z-index: -1;
+
+    }
+
+    #playicon {
+        position: absolute;
+        left: 370px;
+        top: 580px;
+        color: rgb(226, 221, 221);
+        font-size: 60px;
+        z-index: -1
+    }
+
+    #playicon:hover {
+        font-size: 62px;
+        color: white;
+    }
+
+    #divider label {
+        color: white;
+        position: relative;
+        top: 50px;
+    }
+
+    #content {
+        width: 945px;
+        /*height: 500px;
+        border: 1px solid white;*/
+        position: absolute;
+        left: 300px;
+        top: 770px;
+        color: white;
+        z-index: -1;
+        word-wrap: break;
+    }
+
+    #content label {
+        width: 100%;
+        height: fit-content;
+    }
+
+    #displayer {
+        margin-top: 0px;
+        visibility: hidden;
+    }
+
+    #youtube-video {
+        position: absolute;
+        left: 300px;
+        top: 70px;
+        z-index: 2000;
+    }
+
+    #theaters {
+        position: absolute;
+        top: 1000px;
+        color: white;
+        font-size: 30px;
+        left: 300px;
+    }
+
+    #info {
+        width: 100%;
+        word-wrap: break;
+    }
+
+    #info label {
+        font-size: 20px;
+    }
+
+    #divider button{
+        padding: 5px;
+       /* position: absolute;*/
+        left: 1172px;
+       /* top: 50px;*/
+        border-radius: 10px;
+        width: 100px;
+        background-color: #dba205;
+        border: none
+        
+    }
+
+    #book {
+        position: absolute;
+        top:50px
+
+    }
+    #visit{
+        position: absolute;
+        top: 100px;
+
+    }
+
+
+
+    .footer {
+        margin-top: 100%;
+    }
+
+    .grid-items {
+        row-gap: 10px;
+    }
+
+    .movies-container {
+        position: relative;
+        top: 700px;
+        left: 300px;
+        flex: 1;
+        /* background-color: #001232; */
+        background-color: black;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        padding-top: 100px;
+    }
+    .movies-slider {
+        width: 945px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .slider-prev, .slider-next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 2rem;
+        color: white;
+        z-index: 900;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 0 0.5rem;
+    }
+
+    .slider-prev {
+        left: 0;
+    }
+    .slider-next {
+        right: 0;
+    }
+
+    .slider-inner {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+    .movie-poster {
+        min-width: 18%;
+        background-color: #444;
+        height: 340px;
+        margin-right: 10px;
+        box-sizing: border-box;
+        border-radius: 20px;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .movie-poster-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        margin-right: 10px;
+        box-sizing: border-box;
+        border-radius: 20px;
+        z-index: -10;
+    }
+</style>
+<script>
+    function findTheaters(mid){
+        alert(mid)
+        window.location.href = "/theaters"
+    }
+    function goDetail(movie_id){
+        let url = "/movie_details/"+movie_id;
+        window.location.href = url;
+      }
+    function moveSlide(direction, sliderType) {
+        let sliderInnerSelector = '.slider-inner';
+        if (sliderType === 'movies1') {
+            sliderInnerSelector = '.movies1-inner';
+        } else if (sliderType === 'movies2') {
+            sliderInnerSelector = '.movies2-inner';
+        } else if (sliderType === 'movies3') {
+            sliderInnerSelector = '.movies3-inner';
+        } else if (sliderType === 'movies4') {
+            sliderInnerSelector = '.movies4-inner';
+        } else {
+            sliderInnerSelector = '.movies5-inner';
+        }
+
+        const sliderInner = document.querySelector(sliderInnerSelector);
+        const slides = sliderInner.querySelectorAll('.movie-poster');
+        const slidesWidth = slides[0].offsetWidth + 10; // Assuming 10px is the margin-right
+        let maxIndex = slides.length - 5; // Adjusting to ensure we don't slide past the end
+
+        if (!window["currentIndex_" + sliderType]) window["currentIndex_" + sliderType] = 0;
+        window["currentIndex_" + sliderType] += direction;
+        if (window["currentIndex_" + sliderType] < 0) {
+            window["currentIndex_" + sliderType] = 0; // Prevent sliding beyond the first poster
+        } else if (window["currentIndex_" + sliderType] > maxIndex) {
+            window["currentIndex_" + sliderType] = maxIndex; // Prevent sliding beyond the last poster
+        }
+        const moveAmount = -(slidesWidth * window["currentIndex_" + sliderType]);
+        sliderInner.style.transform = `translateX(${moveAmount}px)`;
+    }
+    let trailer;
+    let movie_id;
+
+    $(document).ready(function () {
+    
+        var hiddenValue = $('#hidden').val();
+        
+        // Check the value of the hidden input
+        if (hiddenValue === 'true') {
+            // Disable the button
+            $('#visit').prop('disabled', true);
+        } 
+     $(document).on('click', function (event) {
+            var iframe = $('#youtube-video');
+            var iframeRect = iframe[0].getBoundingClientRect();
+            if (
+                !$(event.target).is(iframe) &&
+                event.clientX < iframeRect.left || event.clientX > iframeRect.right ||
+                event.clientY < iframeRect.top || event.clientY > iframeRect.bottom
+            ) {
+                let videoUrl = trailer + '?&mute=1&enablejsapi=1';
+                $('#youtube-video').attr('src', videoUrl);
+                $('#displayer iframe').css('visibility', 'hidden');
+                console.log('Clicked outside of the iframe');
+            }
+        });
+
+
+        let value = $('#divider input').val()
+        console.log("This is hidden value" + value)
+        
+        $('#visit').on('click', function () {
+            let hg = $(this).attr('class')
+            console.log(hg)
+            window.location.href = hg;
+        })
+        
+        $('#playicon').on('click', function () {
+        
+            trailer = $("#displayer iframe").attr('class')
+            let videoUrl = trailer + '?autoplay=1&mute=1&enablejsapi=1';
+            console.log("This is videoUrl", videoUrl)
+            $('#youtube-video').attr('src', videoUrl);
+            $("#displayer iframe").css("visibility", "visible")
+        })
+    })
+</script>
+
 <body>
-    <div></div>
+    <%- include('header.html'); %>
+        <div id="container">
+            <input id="movie_id" type="hidden" value='<%=data[' mid'] %>'>
+        <div id="postercont"><img id="poster_main" src='<%= data['main'] %>'></div>
+            <div id="playerdiv">
+                <img src='<%= data['img']%>'>
+                <i id="playicon" class="fa far fa-play-circle"></i>
+            </div>
+            <div id="divider" style="display: grid; grid-template-columns: auto; gap:25px">
+                <input id="hidden" type="hidden" value='<%= data['isPlaying'] %>'>
+                <button id ="visit" class='<%= data['hg'] %>' >Visit</button>
+                <button id="book" onclick="findTheaters('<%= data.mid %>')">Book ticket</button>
+            </div>
+            <div id="displayer">
+                <iframe id="youtube-video" class='<%= data['trail'] %>' width="1200" height="815" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;
+                    web-share" allowfullscreen></iframe>
+            </div>
+
+            <div id="content" style=" display: grid; grid-template-columns: auto; justify-content: center;  gap:5px ;">
+                <label class="grid-items">Title: &nbsp;<%= data['t']%></label>
+                <label class="grid-items">Description: &nbsp; <%= data['o']%></label>
+                <label class="grid-items">Status: &nbsp; <%= data['stat']%></label>
+                <label class="grid-items">Revenue: &nbsp; $<%= data['rev']%></label>
+                <label class="grid-items">Budget: &nbsp; $<%= data['bud']%></label>
+                <label class="grid-items">Language: &nbsp; <%= data['language']%></label>
+                <label class="grid-items" for=""> Vote Average: &nbsp; <%= data['v1']%> </label>
+                <label class="grid-items" for="">Vote Count: &nbsp; <%= data['v2']%> </label>
+            </div>
+
+            <main class="movies-container">
+                <% if( data['movies1'].length> 0) { %>
+                    <h3 style="margin-top: 0px;color: #dba205;">Recommendations</h3>
+                    <div class="movies-slider">
+                        <div class="slider-prev" onclick="moveSlide(-5, 'movies1')">&#10094;</div>
+                        <div class="slider-inner movies1-inner">
+                            <% data['movies1'].forEach(movie=> { %>
+                                <div class="movie-poster">
+                                    <img class="movie-poster-img" onclick="goDetail('<%= movie.id%>')"
+                                        src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+                                        alt="<%= movie.title %>">
+                                    <div class="movie-info">
+                                        <h3>
+                                            <%= movie.title %>
+                                        </h3>
+                                        <label>Rating: <%= (movie.vote_average).toFixed(1) %></label><br>
+                                        <label>Release Date: <%= movie.release_date %></label>
+                                    </div>
+                                </div>
+                                <% }) %>
+                        </div>
+                        <div class="slider-next" onclick="moveSlide(5, 'movies1')">&#10095;</div>
+                    </div>
+                    <% }else{ %>
+                        <p style="margin-top: 0px;">No items were found that match your query.</p>
+                        <% } %>
+            </main>
+
+
+
+        </div>
+        <%- include('footer.html'); %>
 </body>
+
 </html>

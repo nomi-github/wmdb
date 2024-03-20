@@ -3,9 +3,7 @@ const axios = require("axios");
 const ejs = require("ejs");
 const path = require("path");
 var cookieParser = require('cookie-parser');
-
 const app = express();
-
 app.set("view engine", "html");
 app.engine("html", ejs.renderFile);
 
@@ -15,6 +13,7 @@ var {theatreRouter, getCurrentLocation} = require('./routers/theatres.js');
 // const router = require("./routers/router");
 const mvlist_router = require("./routers/movielist");
 const homeRouter = require("./routers/homeRouter");
+const movierouter = require("./routers/movieRouter");
 const credential_router = require("./routers/credential");
 
 // CONFIGURATION MIDDLEWARES
@@ -42,3 +41,6 @@ app.listen(PORT, () => {
 app.use(mvlist_router);
 app.use(homeRouter);
 app.use(credential_router);
+app.use(movierouter);
+
+
