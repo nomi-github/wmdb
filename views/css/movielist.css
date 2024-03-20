@@ -15,11 +15,12 @@
     padding: 1rem;
     /* background-color: #001232; */
     background-color: black;
-    position: fixed;
-    top: 50px;
+    position: relative;
+    top: 60px; /* adjust with the header */
     left: 0;
-    width: 100%;
-    z-index: 1000;
+    /* width: 100%; */
+    /* z-index: 1000; */
+    padding: 10px 70px;
 }
   .navbar ul {
     list-style: none;
@@ -31,7 +32,7 @@
     padding: 0.5rem 1rem;
     cursor: pointer;
     color: white;
-    padding: 10px 20px;
+    padding: 20px;
   }
   .navbar select {
     padding: 0.5rem;
@@ -56,14 +57,16 @@
     color: white;
     display: flex;
     flex-direction: column;
-    padding: 1rem;
-    padding-top: 100px;
+    /* padding: 1rem; */
+    /* padding: 60px; adjust left side */
+    padding-top: 50px; /* adjust with navbar */
 }
 .content-wrapper {
   display: flex;
   flex-direction: column;
   min-height: 73.5vh;
-  width: 100%;
+  /* width: 100%; */
+  padding: 10px 70px; /* adjust left */
 }
   .movies-slider {
     width: 100%;
@@ -88,7 +91,7 @@
     position: relative;
     min-width: 14%;
     background-color: #444;
-    height: 340px;
+    height: 300px;
     margin-right: 10px;
     box-sizing: border-box;
     border-radius: 20px;
@@ -107,25 +110,12 @@
     z-index: -10;
   }
   .movie-info {
-  /* position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
-  color: #dba205;
-  display: none;
-  padding: 10px;
-  box-sizing: border-box;
-  font-size: 15px;
-  text-align: left;
-  transition: height 0.5s ease-in;
-  border-radius: 0 0 20px 20px; */
   position: absolute;
   top: 100%;  /*Start hidden below the bottom */
-   left: 0;
+  left: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.8);
-  color: orangered;
+  color: white;
   padding: 10px;
   box-sizing: border-box;
   font-size: 15px;
@@ -135,6 +125,10 @@
   visibility: hidden; /* Initially hidden */
   opacity: 0; /* Start fully transparent */
    transition: visibility, opacity 0.5s linear;
+}
+
+h3{
+  color:red;
 }
 
 .movie-poster:hover .movie-info {

@@ -123,7 +123,6 @@ credentialRouter.post("/signin", async (req, res) => {
       });
     } else {
       res.render("pages/loginCustom", { msg: "Invalid username or password" });
-      // res.status(401).send('Invalid username or password');
     }
   } catch (error) {
     console.error("Error during login:", error);
