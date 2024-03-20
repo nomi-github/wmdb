@@ -10,6 +10,7 @@ const options = {
 };
 const router = express.Router(options);
 router.get('/movie_details/:id', async function(req, res, next){
+  try{
   let movie_id = req.params.id;
   let movie = await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}?language=en-US&api_key=${process.env.API_KEY}&page=1`);
   const now = await axios.get(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=${process.env.API_KEY}&page=1`);
@@ -60,7 +61,11 @@ router.get('/movie_details/:id', async function(req, res, next){
                                     v1:vote_avg, v2:vote_count, 
                                     img:playimg, main:mainimg, 
                                     mid:movie_id, hg:homepg,isPlaying:isNow,
-                                    trail:trailer, movies1: recommendRes.data.results }})
+                                    trail:trailer, movies1: recommendRes.data.results }})}
+ catch(error){
+  console.error('Error fetching data from TMDB:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+ }
   })
 
 module.exports = router; 
