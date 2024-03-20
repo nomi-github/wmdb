@@ -7,15 +7,16 @@
     <body>
         <div class="login-outer">
             <div class="login-container">
-                <form class="login-card">
+                <form class="login-card" action="/signin" method="post" >
                     <p class="title">Sign in</p>
-                    <label>Email address:</label>
+                    <label for="msg" style="color: red; text-align: center; margin-bottom: 20px;"><%=msg%></label><br>
+                    <label>Username:</label>
                     <br/>
-                    <input type="text"/>
+                    <input type="text" id="name" name="name" required>
                     <br/>
                     <label>Password:</label>
                     <br/>
-                    <input type="text"/>
+                    <input type="password" id="password" name="password" required>
                     <br/>
                     <button type="submit">Sign in</button>
                     <a class ="forgot" href="/forgot">Forgot password</a>
