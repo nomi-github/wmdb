@@ -43,7 +43,7 @@
     }
     #poster_main {
         border: 1px solid rgba(0, 0, 0, 0.0);
-        opacity: 0.5;
+        opacity: 0.4;
         /*width: 100%*/
         ;
         height: 500px;
@@ -55,12 +55,19 @@
     }
 
     #divider  {
+        opacity: 1;
         position: absolute;
         top: 500px;
         background-color: rgb(41, 40, 40);
         width: 100%;
         height: 140px;
-        z-index: -10
+        z-index: -10;
+        /*background: linear-gradient(to left, transparent, rgb(26, 26, 26));
+        mask-image: linear-gradient(to right, transparent, black);*/
+
+        background: linear-gradient(to top, transparent, rgb(26, 26, 26));
+        mask-image: linear-gradient(to top, transparent, black);
+
     }
 
     #playerdiv {
@@ -333,7 +340,7 @@
     <%- include('header.html'); %>
         <div id="container">
             <input id="movie_id" type="hidden" value='<%=data[' mid'] %>'>
-            </div id="postercont"><img id="poster_main" src='<%= data['main'] %>'></div>
+        <div id="postercont"><img id="poster_main" src='<%= data['main'] %>'></div>
             <div id="playerdiv">
                 <img src='<%= data['img']%>'>
                 <i id="playicon" class="fa far fa-play-circle"></i>
