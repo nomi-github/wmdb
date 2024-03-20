@@ -7,6 +7,7 @@ const { db } = require("./routers/mongodb");
 // const router = require("./routers/router");
 const mvlist_router = require("./routers/movielist");
 const homeRouter = require("./routers/homeRouter");
+const credential_router = require("./routers/credential");
 const app = express();
 
 app.use(cookieParser());
@@ -39,3 +40,4 @@ app.listen(PORT, () => {
 
 app.use(mvlist_router);
 app.use(homeRouter);
+app.use(credential_router);
