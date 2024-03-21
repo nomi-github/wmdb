@@ -114,7 +114,6 @@ ul.profile {
   padding: 0px;
 }
 .profile {
-  width: 120px;
   right: -40px;
   top: 10px !important;
   background-color: rgba(0, 0, 0, 0.7);
@@ -125,6 +124,7 @@ ul.profile {
   list-style: none;
   padding: 10px 30px;
   color: white;
+  white-space: nowrap;
 }
 .movie_type li a {
   text-decoration: none;

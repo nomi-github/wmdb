@@ -155,9 +155,9 @@
             <div>
               <div class="genre"><label>Genre:</label><span>Action, Fantasy, Superhereos</span></div>
               <div class="desc">
-                <label>Contents:</label>
-                <span>A young woman's marriage to a charming prince turns into a fierce fight for survival when she's offered up as a sacrifice to a fire-breathing dragon.</span>
-              </div>
+                <label>Description:</label>
+                <span></span>
+               </div>
             </div>
           </div>
           <div style="width: 50%; height: 100%; display: flex; align-items: center">
@@ -179,7 +179,10 @@
       </div>
       <div class="movies">
         <div class="inner">
-          <p class="title">Popular</p>
+          <p class="title">Popular<span class="detail">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg></p>
           <div class="card-container">
             <% for(let p of popular.slice(0,6)){%>
             <div class="card-outer rec" style="background-image: url(https://image.tmdb.org/t/p/original/<%=p.poster_path %>)">
@@ -191,7 +194,11 @@
           </div>
         </div>
         <div class="inner">
-          <p class="title">Recommendations</p>
+          <% if(recommend.length > 0){%>
+          <p class="title">Recommendations<span class="detail">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg></p>
           <div class="card-container">
             <% for(let r of recommend.slice(0,6)){%>
             <div class="card-outer rec" style="background-image: url(https://image.tmdb.org/t/p/original/<%=r.poster_path %>)">
@@ -199,8 +206,24 @@
                 <a href="/movie_details/<%= r.id %>"><%=r.original_title %></a>
               </div>
             </div>
-            <% } %>
+            <% }%>
           </div>
+          <%} else{%>
+            <p class="title">Upcoming<span class="detail">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+            </span></p>
+          <div class="card-container">
+            <% for(let r of upcoming.slice(0,6)){%>
+            <div class="card-outer rec" style="background-image: url(https://image.tmdb.org/t/p/original/<%=r.poster_path %>)">
+              <div class="card-inner">
+                <a href="/movie_details/<%= r.id %>"><%=r.original_title %></a>
+              </div>
+            </div>
+            <% }%>
+          </div>
+            <% } %>
         </div>
       </div>
     </div>
