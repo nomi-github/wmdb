@@ -9,26 +9,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"
-        type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"type='text/css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Biryani:wght@200;300;400;600;700;800;900&family=Noto+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,100&family=Play:wght@400;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
     <title>Movie</title>
 </head>
 <style>
     body {
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: "Roboto Flex", sans-serif;
         font-size: 14px;
     }
     #container {
-        
         width: 100%;
         position: absolute;
         top: 0px;
         height: 500px;
     }
     #postercont{
-
         width: 100%;
         position: absolute;
         top: 0px;
@@ -114,13 +112,19 @@
         left: 300px;
         top: 770px;
         color: white;
+        font-size: large;
+        font-family: "Roboto Flex", sans-serif;   
         z-index: -1;
         word-wrap: break;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgb(46, 46, 46);
+
+
     }
 
     #content label {
-        width: 100%;
-        height: fit-content;
+       /* width: 100%;
+        height: fit-content;*/
     }
 
     #displayer {
@@ -154,14 +158,20 @@
 
     #divider button{
         padding: 5px;
+        color: white;
+        font-size: 15px;
+        font-family: "Roboto Flex", sans-serif;
        /* position: absolute;*/
         left: 1172px;
        /* top: 50px;*/
         border-radius: 10px;
         width: 100px;
-        background-color: #dba205;
-        border: none
+        background-color: red;
+        border: none;
         
+    }
+    #divider button:hover {
+        background-color: rgb(248, 102, 102);
     }
 
     #book {
@@ -187,7 +197,7 @@
 
     .movies-container {
         position: relative;
-        top: 700px;
+        top: 300px;
         left: 300px;
         flex: 1;
         /* background-color: #001232; */
@@ -228,7 +238,7 @@
         transition: transform 0.5s ease;
     }
     .movie-poster {
-        min-width: 18%;
+        min-width: 20%;
         background-color: #444;
         height: 340px;
         margin-right: 10px;
@@ -247,6 +257,29 @@
         border-radius: 20px;
         z-index: -10;
     }
+    #leftContent{
+    top: 300px;
+       font-family: "Roboto Flex", sans-serif;
+       font-size: large;
+       color: white;
+       position: relative;
+       left: 1302px;
+    }
+    .grid-items2{
+       /* justify-content: left;*/
+
+    }
+
+.movie-poster:hover .movie-info {
+display: block;
+height: 100%;
+top: 0;  /*Slide down to show */
+visibility: visible;
+opacity: 1;
+transition-delay: 0s, 0s; 
+}
+
+
 </style>
 <script>
     function findTheaters(mid){
@@ -355,19 +388,33 @@
             </div>
 
             <div id="content" style=" display: grid; grid-template-columns: auto; justify-content: center;  gap:5px ;">
-                <label class="grid-items">Title: &nbsp;<%= data['t']%></label>
-                <label class="grid-items">Description: &nbsp; <%= data['o']%></label>
-                <label class="grid-items">Status: &nbsp; <%= data['stat']%></label>
-                <label class="grid-items">Revenue: &nbsp; $<%= data['rev']%></label>
-                <label class="grid-items">Budget: &nbsp; $<%= data['bud']%></label>
-                <label class="grid-items">Language: &nbsp; <%= data['language']%></label>
-                <label class="grid-items" for=""> Vote Average: &nbsp; <%= data['v1']%> </label>
-                <label class="grid-items" for="">Vote Count: &nbsp; <%= data['v2']%> </label>
+                <h3 class="grid-items">Title &nbsp;<%= data['t']%></h3>
+                <label class="grid-items"><%= data['o']%></label>
             </div>
+
+            <div id="leftContent" style="display: grid; grid-template-columns: auto;">
+                <label class="grid-items2"><b>Status</b></label> 
+                <label class="grid-items2"><%= data['stat']%></label><br>
+                
+                <label class="grid-items2"><b>Revenue</b></label> 
+                <label class="grid-items2"><%= data['rev']%></label><br>
+                
+                <label class="grid-items2"><b>Budget</b></label> 
+                <label class="grid-items2"><%= data['bud']%></label><br>
+                <label class="grid-items2"><b>Language</b></label> 
+                <label class="grid-items2"><%= data['language']%></label><br>
+
+                <label class="grid-items2"><b>Vote Average</b></label> 
+                <label class="grid-items2"><%= data['v1']%></label><br>
+                
+                <label class="grid-items2"><b>Vote Count</b></label> 
+                <label class="grid-items2" ><%= data['v2']%> </label><br>
+            </div>
+        
 
             <main class="movies-container">
                 <% if( data['movies1'].length> 0) { %>
-                    <h3 style="margin-top: 0px;color: #dba205;">Recommendations</h3>
+                    <h2 style="margin-top: 0px;color:Red;">Recommendations</h2>
                     <div class="movies-slider">
                         <div class="slider-prev" onclick="moveSlide(-5, 'movies1')">&#10094;</div>
                         <div class="slider-inner movies1-inner">
