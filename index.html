@@ -11,9 +11,6 @@
       rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
-      //const url = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1';
-      //const url = 'https://api.themoviedb.org/3/movie/944401/recommendations?language=en-US&page=1';
-      //const url = 'https://api.themoviedb.org/3/movie/popular';
       const url = "https://api.themoviedb.org/3/movie/1011985/watch/providers";
       const options = {
         method: "GET",
@@ -25,16 +22,6 @@
       };
 
       $(document).ready(function () {
-        /*    fetch(url, options)
-    .then(res => res.json())
-    .then(json => {
-        console.log(json);
-       // let result = JSON.parse(json);
-     
-        $("div").html(JSON.stringify(json));
-
-    })
-    .catch(err => console.error('error:' + err));*/
         let latitude = "41.006630";
         let longitude = "-91.965050";
 
