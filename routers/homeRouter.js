@@ -21,10 +21,11 @@ homeRouter.get("/", async function (req, res, next) {
   let movie_id = req.cookies.latestMovie;
   let recommendRes = [];
   console.log("movie id", req.cookies);
-  if (movie_id) {
+  if (movie_id && movie_id != "undefined") {
     console.log("movie id", movie_id);
     recommendRes = await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/recommendations?language=en-US&api_key=${process.env.API_KEY}&page=1`);
     if (recommendRes.status != 200) {
+      console.log(movie_id);
       res.render("error");
     }
   }
