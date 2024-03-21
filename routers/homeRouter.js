@@ -20,6 +20,7 @@ homeRouter.get("/", async function (req, res, next) {
 
   let movie_id = req.cookies.latestMovie;
   let recommendRes = [];
+  console.log("movie id", req.cookies);
   if (movie_id) {
     console.log("movie id", movie_id);
     recommendRes = await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/recommendations?language=en-US&api_key=${process.env.API_KEY}&page=1`);
@@ -37,7 +38,6 @@ homeRouter.get("/", async function (req, res, next) {
   if (genreRes.status != 200) {
     res.render("error");
   }
-  console.log(req.cookies.isLogged);
   await res.render("pages/index", {
     popular: popularRes.data.results,
     nowPlaying: nowPlayingRes.data.results || [],
