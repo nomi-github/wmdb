@@ -82,11 +82,16 @@ credentialRouter.post("/signin", async (req, res) => {
     if (loginData.loginResult) {
       // res.status(200).send('Login successful'); // get error
       const latestmovieId = loginData.latestMovie;
-      res.cookie("latestMovieId", latestmovieId);
+      if(latestmovieId){
+        res.cookie("latestMovie", latestmovieId);
+      }else{
+        res.cookie("latestMovie", "");
+      }
+      
       res.cookie("username", req.body.name);
 
       // render index page
-      res.cookie("latestMovie", "157336");
+      // res.cookie("latestMovie", "157336");
       // res.render("pages/loader");
       const nowPlayingRes = await axios.get(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&api_key=${process.env.API_KEY}&page=1`);
       if (nowPlayingRes.status != 200) {
