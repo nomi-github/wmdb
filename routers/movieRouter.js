@@ -13,7 +13,7 @@ router.get('/movie_details/:id', async function(req, res, next){
   res.cookie("latestMovie", movie_id);
   if (req.cookies.username){
     try {
-      const result = await db.addMovieToUser(req.cookies.username, movieId);
+      const result = await db.addMovieToUser(req.cookies.username, movie_id);
       res.status(200).json({ success: true, message: 'Latest movie saved/updated successfully' });
   } catch (error) {
       console.error('Error saving/updating latest movie:', error);
