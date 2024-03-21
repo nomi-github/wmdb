@@ -146,6 +146,11 @@ form {
 
 .moviePoster:hover {
     cursor: pointer;
+    border: 1px solid;
+    box-shadow: inset 0 0 20px red, 0 0 20px rgba(255, 0, 0, 100);
+    outline-color: rgba(255, 255, 255, 0);
+    outline-offset: 15px;
+    text-shadow: 1px 1px 2px #427388;
 }
 
 .poster img {
@@ -210,7 +215,8 @@ form {
 }
 
 .lightText {
-    color:rgb(94, 94, 94);
+    color:#ccc;
+    font-size: 11px;
 }
 .poster {
     /* height: 200px; */
@@ -219,8 +225,17 @@ form {
 }
 
 .posterTitle {
-    font-size: 17px;
+    font-size: 18px;
     text-transform: uppercase;
+    font-weight: 600;
+}
+
+.posterTitle:hover{
+    text-decoration: underline;
+}
+
+#theatresList h3:hover {
+    text-decoration: underline;
 }
 
 .flex-column {
@@ -243,6 +258,11 @@ form {
 
 .theaterDiv:hover {
     cursor: pointer;
+    border: 1px solid;
+    box-shadow: inset 0 0 20px red, 0 0 20px rgba(255, 0, 0, 100);
+    outline-color: rgba(255, 255, 255, 0);
+    outline-offset: 15px;
+    text-shadow: 1px 1px 2px #427388;
 }
 
 .theaterDiv img {
@@ -290,7 +310,7 @@ form {
     height: 50px;
     border: 3px solid #f3f3f3;
     border-radius: 50%;
-    border-top: 3px solid ffc705;
+    border-top: 3px solid red;
     animation: spin 1s linear infinite;
 }
 
