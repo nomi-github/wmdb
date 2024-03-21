@@ -12,6 +12,7 @@
           $("ul.profile li").remove();
           $("ul.profile").append(`<li>Hello ${userName}!<li/>`);
           $("ul.profile").append("<li><a href='/signout'>Sign out</a></li>");
+          $("ul.profile li:nth-child(2)").remove();
         }
       });
       $(window).on("scroll", function () {
