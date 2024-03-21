@@ -156,6 +156,7 @@ form {
 .poster img {
     height:198px;
     width: 133px;
+    border-radius: 5px 0px 0px 5px
 }
 
 .gap_10 {
@@ -268,6 +269,7 @@ form {
 .theaterDiv img {
     width: auto;
     border: none;
+    border-radius: 5px 0px 0px 5px
 }
 
 .ratingClass {
