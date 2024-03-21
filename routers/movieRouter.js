@@ -3,7 +3,6 @@ const fetch = require('node-fetch');
 const { getJson } = require("serpapi");
 var cookieParser = require("cookie-parser");
 const axios = require("axios");
-const homeHelper = require("./homeHelper");
 const options = {
   caseSensitive: true,
   strict: true,

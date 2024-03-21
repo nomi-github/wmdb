@@ -1,7 +1,7 @@
 <html lang="en">
 
 <head>
-    <title>Sample</title>
+    <title>Theaters</title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="css/layout.css" />
     <link rel="stylesheet" href="css/style.css" />
@@ -9,14 +9,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Biryani:wght@200;300;400;600;700;800;900&family=Noto+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,100&family=Play:wght@400;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"/>
 
     <script src="js/theatres.js"></script>
     <script>
         let showTimes = [];
         let selectedDate;
+        let filterByMovieId;
+
         $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            filterByMovieId = urlParams.get('movieId');
+            console.log('movieId', filterByMovieId);
             updateShowTimes("all");
             changeSelectedDate($('.date:first'));
+
             console.log("selectedDate", selectedDate);
         });
 
@@ -26,12 +33,16 @@
                 url: '/getShowTimes/' + selectedTheaters, // Server-side endpoint to fetch showTimes
                 type: 'GET',
                 dataType: 'json',
+                beforeSend: function () {
+                    // Show spinner before AJAX request starts
+                    $('#spinner').show();
+                },
                 success: function (response) {
                     if (!response) {
                         $('#showTimeList').html('Sorry we could not find any showtimes for selected date');
                     } else {
                         console.log("updatingShowTimes", response);
-                        
+
                         showTimes = response;
                         showResults();
                     }
@@ -39,6 +50,10 @@
                 error: function (xhr, status, error) {
                     console.error('Error fetching showtimes:', error);
                     $('#theatresList').html('Error fetching showtimes');
+                },
+                complete: function () {
+                    // Hide spinner when AJAX request completes
+                    $('#spinner').hide();
                 }
             });
         }
@@ -49,7 +64,7 @@
             if (showTimes) {
                 for (let ele of showTimes) {
                     console.log(ele);
-                    const html = createPlayTimeDiv(ele, selectedDate);
+                    const html = createPlayTimeDiv(ele, selectedDate, filterByMovieId);
                     //console.log(html);
                     $('#showTimeList').append(html);
                 }
@@ -125,12 +140,12 @@
                             <h3>
                                 <%=t.title%>
                             </h3>
-                            <div style="color:rgb(94, 94, 94); font-size: 14px;">
+                            <div class="lightText">
                                 <span>
                                     <%=t.rating%>
                                 </span>
                                 <%for (let rating=1; rating<=5; rating++) { let ratingClass="" ; if (rating<=t.rating) {
-                                    console.log(rating, t.rating); ratingClass="ratingClass" ; } %>
+                                    ratingClass="ratingClass" ; } %>
                                     <span class="fa fa-star <%=ratingClass%>"></span>
                                     <%}%>
                                         <span>
@@ -138,7 +153,7 @@
                                         </span>
                             </div>
 
-                            <span style="color:lightgray">
+                            <span class="lightText">
                                 <%=t.address%>
                             </span>
                             <h4>
@@ -151,10 +166,8 @@
                     <!-- </div> -->
                     <%}%>
             </div>
-
-            <div id="showTimeList">
-
-            </div>
+            <div id="spinner"></div> 
+            <div id="showTimeList"></div>
         </div>
         <%- include('footer.html'); %>
 </body>

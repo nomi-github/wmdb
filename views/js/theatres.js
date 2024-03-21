@@ -17,27 +17,7 @@ function setToCurrentLocation() {
     $("newLocation").val("");
 }
 
-// function createTheaterListDiv(data) {
-//     let html = "";
-
-//     for (let movieTime of data.showTimes) {
-//         if (selectedDate == movieTime.date) {
-//             //console.log('movie', movieTime);
-//             html += "<div class='moviePoster flex-transforming gap_10 padding_20'>" +
-//                 "<div class='poster gap_10'><img src='/' alt=''>" +
-//                 "<div class='flex-column'><label class='posterTitle'>" + movieTime.name + "</label><label>Short description<label></div></div>" +
-//                 "<div class='showingTimes'><img src='" + data.thumbnail + "'><div>" + data.title + ", Adress: " + data.addr + "</div>";
-//             for (let time of movieTime.showing[0].time) {
-//                 //console.log('time', time);
-//                 html += "<div>" + time + "</div>";
-//             }
-//             html += "</div></div>";
-//             console.log(html);
-//         }
-//     }
-// }
-
-function createPlayTimeDiv(data, selectedDate) {
+function createPlayTimeDiv(data, selectedDate, filterBydMovieId) {
     
     let html = "<div class='theatreBox'><h2>Now playing at "+data.theaterName+"</h2><div class='theatreShowTimeList'>";
     let count = 0;
@@ -47,15 +27,15 @@ function createPlayTimeDiv(data, selectedDate) {
             console.log(selectedDate, movieTime.date);
             if (selectedDate == movieTime.date) {
                 for (let movie of movieTime.movies) {
-                    if (movie.movieDetail) {
+                    if (movie.movieDetail && (!filterBydMovieId || movie.movieDetail.movie_id == filterBydMovieId)) {
                         count++;
                         console.log('movies are same', movie);
                         html += "<div class='moviePoster flex-transforming gap_10' onclick='goToDetail(\"" + movie.movieDetail.movie_id + "\")'>";
                             html += "<div class='poster gap_10 flex-transforming'><img src='https://image.tmdb.org/t/p/w500" + movie.movieDetail.poster_path + "' alt=''>";
-                                html += "<div class='flex-column gap_10 padding_10'><label class='posterTitle'>" + movie.name + "</label>"+
-                                        "<label class='lightText'>"+movie.movieDetail.release_date+ "</label>"+
+                                html += "<div class='flex-column padding_10'><div class='posterTitle'>" + movie.name + "</div>"+
+                                        "<label class='lightText'>"+movie.movieDetail.release_date+ "</label><br/>"+
                                         "<label class='lightText'>Rating: " +movie.movieDetail.vote_average+"</label></div></div>";
-                                html += "<div class='gap_5 padding_10 flex-column'><div class='typeText'>"+(movie.showing[0].type?movie.showing[0]:'Standard')+"</div>";
+                                html += "<div class='gap_5 padding_10 flex-column'><div class='typeText'>"+(movie.showing[0].type?movie.showing[0].type:'Standard')+"</div>";
                         for (let time of movie.showing[0].time) {
                             //console.log('time', time);
                             html += "<div>" + time + "</div>";
@@ -74,9 +54,8 @@ function createPlayTimeDiv(data, selectedDate) {
     return html;
 }
 
-function goDetail(movieId) {
-    alert(movieId);
-    const url = '/movie/${movieId}';
+function goToDetail(movieId) {
+    const url = `/movie_details/${movieId}`;
     window.location.href = url;
 }
 

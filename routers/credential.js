@@ -83,7 +83,7 @@ credentialRouter.post("/signin", async (req, res) => {
       // res.status(200).send('Login successful'); // get error
       const latestmovieId = loginData.latestMovie;
       if(latestmovieId){
-        res.cookie("latestMovie", latestmovieId);
+        res.cookie("latestMovie", latestmovieId.movie);
       }else{
         res.cookie("latestMovie", "");
       }

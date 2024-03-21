@@ -6,7 +6,7 @@
     position: relative;
     background-color: #141414;
     color: white;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: "Roboto Flex", sans-serif;
     margin-top: 70px;
     padding: 10px 70px;
 }
@@ -19,7 +19,7 @@
 .typeText {
     margin-bottom:10px; 
     font-size:15px;
-    color: #ffc705;
+    color: red;
 }
 
 .padding_20 {
@@ -54,7 +54,7 @@
 .btn:hover {
     cursor: pointer;
     border-radius: 30px;
-    box-shadow: inset 0 0 0px #ffc705, 0 0 30px rgba(255, 255, 10, 100);
+    box-shadow: inset 0 0 0px red, 0 0 30px rgba(255, 0, 0, 100);
     outline-offset: 15px;
     text-shadow: 1px 1px 2px #427388;
 }
@@ -115,7 +115,6 @@ form {
     align-items: center;
     padding: 10px;
     border-radius: 5px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .date {
@@ -132,7 +131,7 @@ form {
 .date-selected {
     cursor: pointer;
     border: 1px solid;
-    box-shadow: inset 0 0 20px #ffc705, 0 0 20px rgba(255, 255, 10, 100);
+    box-shadow: inset 0 0 20px red, 0 0 20px rgba(255, 0, 0, 100);
     outline-color: rgba(255, 255, 255, 0);
     outline-offset: 15px;
     text-shadow: 1px 1px 2px #427388;
@@ -143,6 +142,15 @@ form {
     border-radius: 5px;
     width: 30%;
     display: flex;
+}
+
+.moviePoster:hover {
+    cursor: pointer;
+    border: 1px solid;
+    box-shadow: inset 0 0 20px red, 0 0 20px rgba(255, 0, 0, 100);
+    outline-color: rgba(255, 255, 255, 0);
+    outline-offset: 15px;
+    text-shadow: 1px 1px 2px #427388;
 }
 
 .poster img {
@@ -197,7 +205,7 @@ form {
 }
 
 #selectedLocation {
-    color: #ffc705;
+    color: red;
     font-weight: bolder;
 }
 
@@ -207,16 +215,27 @@ form {
 }
 
 .lightText {
-    color:rgb(94, 94, 94);
+    color:#ccc;
+    font-size: 11px;
 }
 .poster {
     /* height: 200px; */
     display: flex;
+    width: 75%;
 }
 
 .posterTitle {
-    font-size: 17px;
+    font-size: 18px;
     text-transform: uppercase;
+    font-weight: 600;
+}
+
+.posterTitle:hover{
+    text-decoration: underline;
+}
+
+#theatresList h3:hover {
+    text-decoration: underline;
 }
 
 .flex-column {
@@ -239,6 +258,11 @@ form {
 
 .theaterDiv:hover {
     cursor: pointer;
+    border: 1px solid;
+    box-shadow: inset 0 0 20px red, 0 0 20px rgba(255, 0, 0, 100);
+    outline-color: rgba(255, 255, 255, 0);
+    outline-offset: 15px;
+    text-shadow: 1px 1px 2px #427388;
 }
 
 .theaterDiv img {
@@ -274,6 +298,25 @@ form {
     font-size: 20px;
     position: absolute;
     display: none;
+}
+
+#spinner {
+    display: none;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    border: 3px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 3px solid red;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 @media screen and (max-width: 510px) {
