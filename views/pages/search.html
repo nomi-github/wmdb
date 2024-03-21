@@ -25,7 +25,7 @@
       <div class="search-inner">
         <% for(let r of results){ %>
         <div class="search-container">
-          <img width="150" height="220" src="https://image.tmdb.org/t/p/original<%= r.poster_path%>" />
+          <img width="150" src="https://image.tmdb.org/t/p/original<%= r.poster_path%>" />
           <div class="detail">
             <a href="/movie_details/<%= r.id%>" class="title"><%= r.original_title%></a>
             <span><%= r.release_date%></span>
