@@ -152,6 +152,20 @@ body {
   font-size: 26px;
   font-weight: 500;
   color: white;
+  position: relative;
+}
+
+.movies .title .detail svg {
+  color: red;
+  transition: all 0.3s ease-in;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 0;
+}
+.movies .title .detail svg:hover {
+  color: rgb(116, 2, 2);
+  cursor: pointer;
 }
 .movies .card-container {
   display: grid;
