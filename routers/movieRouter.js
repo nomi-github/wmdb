@@ -1,6 +1,8 @@
 const express = require("express");
 const fetch = require('node-fetch');
 const { getJson } = require("serpapi");
+const { db } = require("./mongodb");
+
 var cookieParser = require("cookie-parser");
 const axios = require("axios");
 const options = {
@@ -11,6 +13,16 @@ const router = express.Router(options);
 router.get('/movie_details/:id', async function(req, res, next){
   let movie_id = req.params.id;
   res.cookie("latestMovie", movie_id);
+  if (req.cookies.username){
+    try {
+      const result = await db.addMovieToUser(req.cookies.username, movie_id);
+      //res.status(200).json({ success: true, message: 'Latest movie saved/updated successfully' });
+  } catch (error) {
+      console.error('Error saving/updating latest movie:', error);
+      //res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+
+  }
   //res.cookie("mids", req.cookies.mids['id'].push(movie_id))
   try{
   let movie = await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}?language=en-US&api_key=${process.env.API_KEY}&page=1`);
