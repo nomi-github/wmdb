@@ -35,7 +35,7 @@ mvlist_router.get('/movies', async (req, res) => {
         movies5: mov5, 
         geners:geners, 
         action: "all",
-        msg: "Movies"
+        msg: "All Movies"
       });
     } catch (error) {
       console.error(error);
@@ -97,7 +97,7 @@ mvlist_router.get('/movies', async (req, res) => {
                 movies5: "", 
                 geners: geners, 
                 action: "all",
-                msg: "Movies" + name 
+                msg: "All Movies" + name 
             });
         }
         // res.render('pages/movielist', { movies1: mov1, movies2: mov2, movies3: mov3, geners:geners });

@@ -1,274 +1,255 @@
-  body {
-    margin: 0;
-    padding: 0;
-    background-color: black;
-    font-family: Arial, Helvetica, sans-serif;
-    /* font-family: Arial, sans-serif; */
-    /* background-color: #001232; */
-    color: white;
+body {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, sans-serif; */
+  /* background-color: #001232; */
+  color: white;
 }
 
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    /* background-color: #001232; */
-    background-color: black;
-    position: fixed;
-    top: 50px;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: black;
+  position: relative;
+  top: 60px; /* adjust with the header */
+  left: 0;
+  padding: 10px 55px;
 }
-  .navbar ul {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-  }
-  .navbar li {
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    color: white;
-    padding: 10px 20px;
-  }
-  .navbar select {
-    padding: 0.5rem;
-    background-color: #555;
-    border: none;
-    color: white;
-  }
+.navbar ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+.navbar li {
+  /* padding: 0.5rem 1rem; */
+  cursor: pointer;
+  color: white;
+  padding: 10px 15px;
+}
+.navbar select {
+  padding: 0.5rem;
+  background-color: #555;
+  border: none;
+  color: white;
+}
 
-  /* menu hover */
-  .navbar li:hover {
-  /* background-color: #080808; */
-  background-color: rgba(255, 255, 255, 0.2);
-  /* border-radius: 4px; */
-  /*  */
-  border-radius: 10px;
+/* menu hover */
+.navbar li:hover {
+background-color: rgba(255, 255, 255, 0.2);
+border-radius: 10px;
 }
-  
-  .movies-container {
-    flex: 1;
-    /* background-color: #001232; */
-    background-color: black;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    padding-top: 100px;
-}
-.content-wrapper {
+
+.movies-container {
+  flex: 1;
+  background-color: black;
+  color: white;
   display: flex;
   flex-direction: column;
-  min-height: 73.5vh;
-  width: 100%;
+  padding-top: 60px; /* adjust with navbar */
 }
-  .movies-slider {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-  }
-  .slider-inner {
-    display: flex;
-    transition: transform 0.5s ease;
-  }
-  /* .movie-poster {
-    min-width: 14%;
-    background-color: #444;
-    height: 340px;
-    margin-right: 10px;
-    box-sizing: border-box;
-    border-radius: 20px;
-    cursor: pointer;
-    position: relative;
-  } */
-  .movie-poster {
-    position: relative;
-    min-width: 14%;
-    background-color: #444;
-    height: 340px;
-    margin-right: 10px;
-    box-sizing: border-box;
-    border-radius: 20px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden; /* Prevents info from overflowing */
-    border-radius: 20px;
-  }
-  .movie-poster-img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    margin-right: 10px;
-    box-sizing: border-box;
-    border-radius: 20px;
-    z-index: -10;
-  }
-  .movie-info {
-  /* position: absolute;
-  bottom: 0;
-  left: 0;
+.content-wrapper {
+display: flex;
+flex-direction: column;
+min-height: 73.5vh;
+padding: 10px 70px; /* adjust left */
+}
+.movies-slider {
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
-  color: #dba205;
-  display: none;
-  padding: 10px;
+  overflow: hidden;
+  position: relative;
+}
+.slider-inner {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+.movie-poster {
+  position: relative;
+  min-width: 14%;
+  background-color: #444;
+  height: 300px;
+  margin-right: 10px;
   box-sizing: border-box;
-  font-size: 15px;
-  text-align: left;
-  transition: height 0.5s ease-in;
-  border-radius: 0 0 20px 20px; */
-  position: absolute;
-  top: 100%;  /*Start hidden below the bottom */
-   left: 0;
+  border-radius: 20px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden; /* Prevents info from overflowing */
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+.movie-poster-img{
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: orangered;
-  padding: 10px;
+  height: 100%;
+  object-fit: cover;
+  margin-right: 10px;
   box-sizing: border-box;
-  font-size: 15px;
-  text-align: left; 
-  transition: top 0.5s ease-in; /* Animate the top property */
-  border-radius: 0 0 20px 20px;
-  visibility: hidden; /* Initially hidden */
-  opacity: 0; /* Start fully transparent */
-   transition: visibility, opacity 0.5s linear;
+  border-radius: 20px;
+  z-index: -10;
+  
+}
+.movie-info {
+position: absolute;
+top: 100%;  /*Start hidden below the bottom */
+left: 0;
+width: 100%;
+background-color: rgba(0, 0, 0, 0.8);
+color: white;
+padding: 10px;
+box-sizing: border-box;
+font-size: 15px;
+text-align: left; 
+transition: top 0.5s ease-in; /* Animate the top property */
+border-radius: 0 0 20px 20px;
+visibility: hidden; /* Initially hidden */
+opacity: 0; /* Start fully transparent */
+ transition: visibility, opacity 0.5s linear;
+}
+
+h3{
+color:red;
+}
+
+p{
+  font-weight: bold;
 }
 
 .movie-poster:hover .movie-info {
-  display: block;
-  height: 100%;
-  top: 0;  /*Slide down to show */
-  visibility: visible;
-  opacity: 1;
-  transition-delay: 0s, 0s; 
+display: block;
+height: 100%;
+top: 0;  /*Slide down to show */
+visibility: visible;
+opacity: 1;
+transition-delay: 0s, 0s; 
 }
 
 .slider-prev, .slider-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 2rem;
-    color: white;
-    z-index: 900;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 0 0.5rem;
-  }
-  .slider-prev { left: 0; }
-  .slider-next { right: 0; }
-
-  /* Start Geners css */
-
-  .genres-dropdown {
-  display: none;
   position: absolute;
-  background-color: #5e5656;
-  box-shadow: 0 8px 10px rgba(0,0,0,0.2);
-  width: auto;
-  white-space: nowrap;
-  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 2rem;
+  color: white;
+  z-index: 900;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0 0.5rem;
+}
+.slider-prev { left: 0; }
+.slider-next { right: 0; }
+
+/* Start Geners css */
+
+.genres-dropdown {
+display: none;
+position: absolute;
+background-color: #5e5656;
+box-shadow: 0 8px 10px rgba(0,0,0,0.2);
+width: auto;
+white-space: nowrap;
+z-index: 1;
 }
 .geners {
-  position: relative;
+position: relative;
 }
 .geners:hover .genres-dropdown {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* Creates columns */
-  gap: 20px;
-  position: absolute;
-  left: 0;
-  background-color: #080808;
-  /* background-color: rgba(255, 255, 255, 0.2); */
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-  border-radius: 8px;
-  width: max-content;
-  padding: 15px;
-  z-index: 100;
+display: grid;
+grid-template-columns: 1fr 1fr 1fr; /* Creates columns */
+gap: 18px;
+position: absolute;
+left: 0;
+background-color: #080808;
+border-radius: 8px;
+width: max-content;
+padding: 10px 15px;
+top: 35px;
+z-index: 100;
 }
 
 .genres-dropdown div {
-  display: inline-block;
-  vertical-align: top;
-  width: 50%;
+display: inline-block;
+vertical-align: top;
+width: 50%;
 }
 
 .genres-dropdown label {
-  padding: 6px 13px;
-  /* color: rgb(228, 159, 32); */
-  color: white;
-  /* font-size: 18  px; */
-  text-decoration: none;
-  background-color: transparent;
-  /* transition: background-color 0.3s; */
-  cursor: pointer;
-  white-space: nowrap;
+padding: 6px 13px;
+color: white;
+text-decoration: none;
+background-color: transparent;
+cursor: pointer;
+white-space: nowrap;
 }
 
 .genres-dropdown label:hover {
-  background-color: #5e5c5c; /* Background color on hover */
-  border-radius: 10px;
+background-color: #5e5c5c; /* Background color on hover */
+border-radius: 10px;
+}
+
+li:hover{
+background-color: #5e5c5c; /* Background color on hover */
+border-radius: 10px;
 }
 
 .movies-slider + .movies-slider {
-  margin-top: 2rem;
+margin-top: 2rem;
 }
 
 /* End Geners css */
 
 /* Responsive styles */
 @media (max-width: 768px) {
-  .navbar {
-      flex-direction: column;
-      padding: 0.5rem;
-  }
-  
-  .navbar ul {
-      flex-direction: column;
-      align-items: center;
-  }
+.navbar {
+    flex-direction: column;
+    padding: 0.5rem;
+}
 
-  .navbar li, .navbar select {
-      padding: 0.5rem;
-      text-align: center;
-  }
+.navbar ul {
+    flex-direction: column;
+    align-items: center;
+}
 
-  .movies-container {
-      padding-top: 200px;
-  }
+.navbar li, .navbar select {
+    padding: 0.5rem;
+    text-align: center;
+}
 
-  .movie-poster {
-    min-width: 40%;
-    background-color: #444;
-    height: auto;
-    margin-right: 10px;
-    box-sizing: border-box;
-    border-radius: 20px;
-    cursor: pointer;
-    position: relative;
-  }
+.movies-container {
+    padding-top: 200px;
+}
 
-  .slider-inner {
-      justify-content: center;
-  }
+.movie-poster {
+  min-width: 40%;
+  background-color: #444;
+  height: auto;
+  margin-right: 10px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  cursor: pointer;
+  position: relative;
+}
 
-  .geners:hover .genres-dropdown {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr; /* Creates columns */
-    gap: 10px;
-    position: absolute;
-    left: -180px;
-    background-color: #080808;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    border-radius: 8px;
-    width: max-content;
-    padding: 10px;
-    z-index: 100;
-  }
+.slider-inner {
+    justify-content: center;
+}
 
-  .slider-prev, .slider-next {
-      /*display: none; /* Optionally hide navigation arrows on very small screens */
-  }
+.geners:hover .genres-dropdown {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Creates columns */
+  gap: 10px;
+  position: absolute;
+  left: -180px;
+  background-color: #080808;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  width: max-content;
+  padding: 20px;
+  z-index: 100;
+}
+
+.slider-prev, .slider-next {
+    /*display: none; /* Optionally hide navigation arrows on very small screens */
+}
 }
