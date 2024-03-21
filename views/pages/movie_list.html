@@ -35,102 +35,112 @@
         <%  if( movies1.length > 0) { %>
         <div class="movies-slider">
           <h3 style="margin-top: 0px;"><%= msg %></h3>
-          <div class="slider-prev" onclick="moveSlide(-5, 'movies1')">&#10094;</div>
+          <div class="slider-prev" onclick="moveSlide(-7, 'movies1')">&#10094;</div>
           <div class="slider-inner movies1-inner">
             <%movies1.forEach(movie => { %>
               <div class="movie-poster" onclick="goDetail('<%=movie.id%>')" >
                 <img class="movie-poster-img" src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
                 <div class="movie-info">
+                  <div class="movie-info-text">
                   <p><%= movie.title %></p>
                   <label>Rating: <%= (movie.vote_average).toFixed(1) %></label><br>
                   <label>Release Date: <%= movie.release_date %></label>
                 </div>
+                </div>
               </div>
             <% }) %>
           </div>
-          <div class="slider-next" onclick="moveSlide(5, 'movies1')">&#10095;</div>
+          <div class="slider-next" onclick="moveSlide(7, 'movies1')">&#10095;</div>
         </div>
         <% }else{ %>
-          <p style="margin-top: 0px;">No items were found that match your query.</p> 
+          <p style="margin-top: 0px;color: red;">No items were found.</p> 
         <% } %>
       
         <%  if( movies2.length > 0) { %>
           <div class="movies-slider">
             <h3 style="margin-top: 0px;"><%= msg %></h3>
-            <div class="slider-prev" onclick="moveSlide(-5, 'movies2')">&#10094;</div>
+            <div class="slider-prev" onclick="moveSlide(-7, 'movies2')">&#10094;</div>
             <div class="slider-inner movies2-inner">
               <%movies2.forEach(movie => { %>
                 <div class="movie-poster" onclick="goDetail('<%=movie.id%>')" >
                   <img class="movie-poster-img" src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
                   <div class="movie-info">
+                    <div class="movie-info-text">
                     <p><%= movie.title %></p>
                     <label>Rating: <%= (movie.vote_average).toFixed(1) %></label><br>
                     <label>Release Date: <%= movie.release_date %></label>
                   </div>
+                  </div>
                 </div>
               <% }) %>
             </div>
-            <div class="slider-next" onclick="moveSlide(5, 'movies2')">&#10095;</div>
+            <div class="slider-next" onclick="moveSlide(7, 'movies2')">&#10095;</div>
           </div>
           <% } %>
       
           <%  if( movies3.length > 0) { %>
             <div class="movies-slider">
               <h3 style="margin-top: 0px;"><%= msg %></h3>
-              <div class="slider-prev" onclick="moveSlide(-5, 'movies3')">&#10094;</div>
+              <div class="slider-prev" onclick="moveSlide(-7, 'movies3')">&#10094;</div>
               <div class="slider-inner movies3-inner">
                 <%movies3.forEach(movie => { %>
                   <div class="movie-poster"  onclick="goDetail('<%=movie.id%>')">
                     <img class="movie-poster-img" src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
                     <div class="movie-info">
-                      <p><%= movie.title %></p>
-                      <label>Rating: <%= (movie.vote_average).toFixed(1) %></label><br>
-                      <label>Release Date: <%= movie.release_date %></label>
+                      <div class="movie-info-text">
+                        <p><%= movie.title %></p>
+                        <label>Rating: <%= (movie.vote_average).toFixed(1) %></label><br>
+                        <label>Release Date: <%= movie.release_date %></label>
+                      </div>
                     </div>
                   </div>
                 <% }) %>
               </div>
-              <div class="slider-next" onclick="moveSlide(5, 'movies3')">&#10095;</div>
+              <div class="slider-next" onclick="moveSlide(7, 'movies3')">&#10095;</div>
             </div>
             <% } %>
       
             <%  if( movies4.length > 0) { %>
               <div class="movies-slider">
                 <h3 style="margin-top: 0px;"><%= msg %></h3>
-                <div class="slider-prev" onclick="moveSlide(-5, 'movies4')">&#10094;</div>
+                <div class="slider-prev" onclick="moveSlide(-7, 'movies4')">&#10094;</div>
                 <div class="slider-inner movies4-inner">
                   <%movies4.forEach(movie => { %>
                     <div class="movie-poster"  onclick="goDetail('<%=movie.id%>')">
                       <img class="movie-poster-img" src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
                       <div class="movie-info">
-                        <p  style="font-weight: bold;"><%= movie.title %></p>
-                        <label>Rating: <%= (movie.vote_average).toFixed(1) %></label><br>
-                        <label>Release Date: <%= movie.release_date %></label>
+                          <div class="movie-info-text">
+                          <p  style="font-weight: bold;"><%= movie.title %></p>
+                          <label>Rating: <%= (movie.vote_average).toFixed(1) %></label><br>
+                          <label>Release Date: <%= movie.release_date %></label>
+                        </div>
                       </div>
                     </div>
                   <% }) %>
                 </div>
-                <div class="slider-next" onclick="moveSlide(5, 'movies4')">&#10095;</div>
+                <div class="slider-next" onclick="moveSlide(7, 'movies4')">&#10095;</div>
               </div>
               <% } %>
       
               <%  if( movies5.length > 0) { %>
                 <div class="movies-slider">
                   <h3 style="margin-top: 0px;"><%= msg %></h3>
-                  <div class="slider-prev" onclick="moveSlide(-5, 'movies5')">&#10094;</div>
+                  <div class="slider-prev" onclick="moveSlide(-7, 'movies5')">&#10094;</div>
                   <div class="slider-inner movies5-inner">
                     <%movies5.forEach(movie => { %>
                       <div class="movie-poster" onclick="goDetail('<%=movie.id%>')" >
                         <img class="movie-poster-img" src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
                         <div class="movie-info">
-                          <p style="font-weight: bold;"><%= movie.title %></p>
-                          <label>Rating: <%= (movie.vote_average).toFixed(1) %></label><br>
-                          <label>Release Date: <%= movie.release_date %></label>
+                          <div class="movie-info-text">
+                            <p style="font-weight: bold;"><%= movie.title %></p>
+                            <label>Rating: <%= (movie.vote_average).toFixed(1) %></label><br>
+                            <label>Release Date: <%= movie.release_date %></label>
+                          </div>
                         </div>
                       </div>
                     <% }) %>
                   </div>
-                  <div class="slider-next" onclick="moveSlide(5, 'movies5')">&#10095;</div>
+                  <div class="slider-next" onclick="moveSlide(7, 'movies5')">&#10095;</div>
                 </div>
                 <% } %>
         </main>
@@ -157,7 +167,7 @@
         const sliderInner = document.querySelector(sliderInnerSelector);
         const slides = sliderInner.querySelectorAll('.movie-poster');
         const slidesWidth = slides[0].offsetWidth + 10; // Assuming 10px is the margin-right
-        let maxIndex = slides.length - 5; // Adjusting to ensure we don't slide past the end
+        let maxIndex = slides.length - 7; // Adjusting to ensure we don't slide past the end
       
         if (!window["currentIndex_" + sliderType]) window["currentIndex_" + sliderType] = 0;
       
