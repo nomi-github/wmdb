@@ -4,9 +4,13 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/layout.css" />
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Biryani:wght@200;300;400;600;700;800;900&family=Noto+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,100&family=Play:wght@400;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"
+    rel="stylesheet" />
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script>
@@ -55,7 +59,7 @@
             " </svg>"
         );
         $('.top-container').css({'background-image':'url(https://image.tmdb.org/t/p/original/'+ nowPlaying[0].backdrop_path+')'});
-        $('.top-content .title').html(nowPlaying[0].original_title);
+        $('.top-content .title').html(`<a href='/movie_details/${nowPlaying[0].id}'>${nowPlaying[0].original_title}</a>`);
         $('.top-content .captions label:first-child').html(nowPlaying[0].release_date.split('-')[0])
         $('.top-content .desc span').html(nowPlaying[0].overview);
 
@@ -92,7 +96,7 @@
             index =  nowPlaying.length+index;
           }
           $('.top-container').css({'background-image':'url(https://image.tmdb.org/t/p/original/'+ nowPlaying[index].backdrop_path+')'});
-          $('.top-content .title').html(nowPlaying[index].original_title);
+          $('.top-content .title').html(`<a href='/movie_details/${nowPlaying[index].id}'>${nowPlaying[0].original_title}</a>`);
           $('.top-content .captions label:first-child').html(nowPlaying[index].release_date.split('-')[0])
           $('.top-content .desc span').html(nowPlaying[index].overview);
 
@@ -180,7 +184,7 @@
             <% for(let p of popular.slice(0,6)){%>
             <div class="card-outer rec" style="background-image: url(https://image.tmdb.org/t/p/original/<%=p.poster_path %>)">
               <div class="card-inner">
-                <a><%=p.original_title %></a>
+                <a href="/movie_details/<%= p.id %>"><%=p.original_title %></a>
               </div>
             </div>
             <% } %>
@@ -192,7 +196,7 @@
             <% for(let r of recommend.slice(0,6)){%>
             <div class="card-outer rec" style="background-image: url(https://image.tmdb.org/t/p/original/<%=r.poster_path %>)">
               <div class="card-inner">
-                <a href="/movieDetails/<%= r.id %>"><%=r.original_title %></a>
+                <a href="/movie_details/<%= r.id %>"><%=r.original_title %></a>
               </div>
             </div>
             <% } %>
@@ -200,18 +204,19 @@
         </div>
       </div>
     </div>
+    <%- include('footer.html'); %>
     <div class="trailer-outer">
       <button class="cancel" onclick="cancelTrailer()">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
         </svg>
       </button>
-          <iframe
-          width="700"
-          height="500"
-          src=""
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen>
+      <iframe
+        width="700"
+        height="500"
+        src=""
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
   </body>
 </html>
