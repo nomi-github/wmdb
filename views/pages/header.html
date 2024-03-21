@@ -1,6 +1,19 @@
 <html>
   <head>
     <script>
+      $(document).ready(function () {
+        const value = `; ${document.cookie}`;
+        const tmp = value.split(`; username=`);
+        let userName = "";
+        console.log(tmp);
+        if (tmp.length === 2) userName = tmp.pop().split(";").shift();
+        console.log(userName);
+        if (userName.length > 0) {
+          $("ul.profile li").remove();
+          $("ul.profile").append(`<li>Hello ${userName}!<li/>`);
+          $("ul.profile").append("<li><a href='/signout'>Sign out</a></li>");
+        }
+      });
       $(window).on("scroll", function () {
         if ($(window).scrollTop() > 50) {
           $(".header").addClass("active");
