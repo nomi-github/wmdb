@@ -6,11 +6,15 @@ First clone this repository in your system. Make sure you insert your Personal A
 
 `git clone https://<YOUR-PERSONAL-ACCESS-TOKEN>@github.com/nomi-github/wmdb.git`
 
+Install nodejs  in your machine refer `https://nodejs.org/en/download`
+
+Install mongodb in your machine refer `https://www.mongodb.com/docs/manual/installation/`
+
 Then `cd` into the directory and run 
 
 `npm install`
 ## Setup
-To run the website cd into `wmd` and run:
+To run the website cd into `wmdb` and run:
 
 `nodemon app.js`
 
